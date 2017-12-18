@@ -232,13 +232,10 @@ public class MainActivity extends AppCompatActivity
         });
         //ボタンリスナ生成カウンタ初期化
         int y = 0;
-
-
         Cursor c2 = null;
         //select
         String sql2 = "SELECT goal_name FROM goal;";
         c2 = db.rawQuery(sql2, new String[]{});
-
         boolean mov2 = c2.moveToFirst();
 
 
@@ -297,6 +294,8 @@ public class MainActivity extends AppCompatActivity
                  @Override
                  public void onClick(View v) {
                      Intent intent = new Intent(getApplication(), UpdateActivity.class);
+                    // intent.putExtra("",);
+
                      startActivity(intent);
                  }
              });
