@@ -66,6 +66,7 @@ public class AddActivity extends AppCompatActivity {
 
     }
 
+    //Sato
 
     private void initViews(){
         //numberPickerの設定
