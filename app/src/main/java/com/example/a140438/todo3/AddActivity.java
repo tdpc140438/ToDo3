@@ -147,9 +147,10 @@ public class AddActivity extends AppCompatActivity {
 
                 String sql = "INSERT INTO goal(goal_name, memo, progress, " +
                              "year, month, day, hour, minutes, category)" +
-                             "VALUES('" + goal + "', '" + memo + "', " + seekInt +
-                             ", "  + year + ", "+ month + ", " + day + ", " + hour +
-                             ", " + minutes + ", " + category + ")";
+                             " VALUES('" + goal_text.getText().toString() + "', '" + memo_text.getText().toString() +
+                             "', " + seekInt + ", "  + yearPicker.getValue() + ", "+ monthPicker.getValue() +
+                             ", " + dayPicker.getValue() + ", " + hourPicker.getValue() +
+                             ", " + minutesPicker.getValue() + ", " + category + ")";
 
                 db.execSQL(sql);
 
