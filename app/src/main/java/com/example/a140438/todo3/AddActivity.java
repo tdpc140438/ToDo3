@@ -45,7 +45,7 @@ public class AddActivity extends AppCompatActivity {
 
         //Activityの使用宣言
         final EditText goal_text = (EditText) findViewById(R.id.goal_text);
-        final EditText memo_text = (EditText) findViewById(R.id.goal_text);
+        final EditText memo_text = (EditText) findViewById(R.id.memo_text);
         final SeekBar seekBar = (SeekBar) findViewById(R.id.seekBar);
         final NumberPicker yearPicker = (NumberPicker) findViewById(R.id.numberPicker1);
         final NumberPicker monthPicker = (NumberPicker) findViewById(R.id.numberPicker2);
