@@ -3,6 +3,7 @@ package com.example.a140438.todo3;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.database.Cursor;
+import android.database.DatabaseUtils;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -71,9 +72,6 @@ public class MainActivity extends AppCompatActivity
         }
 
 
-
-
-//        setContentView(R.layout.content_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -231,19 +229,18 @@ public class MainActivity extends AppCompatActivity
             }
         });
         //ボタンリスナ生成カウンタ初期化
-        int y = 0;
-        Cursor c2 = null;
+        Cursor c3 = null;
         //select
-        String sql2 = "SELECT * FROM goal;";
-        c2 = db.rawQuery(sql2, new String[]{});
-        boolean mov2 = c2.moveToFirst();
+        String sql3 = "SELECT * FROM goal;";
+        c3 = db.rawQuery(sql3, new String[]{});
+        boolean mov3 = c3.moveToFirst();
+
+
 
 
         //動的ボタン生成部分
         for(int i = 1 ; i < button.length;i++) {
-         if(mov2) {
-
-             y++;
+         if(mov3) {
              button[i] = new Button(this);
              g_View[i] = new TextView(this);
              linearLayout[i] = new LinearLayout(MainActivity.this);
@@ -254,14 +251,10 @@ public class MainActivity extends AppCompatActivity
              button[i].setId(Buttonid);
 
              // Tagを設定する
-             button[i].setTag(String.valueOf(i));
+             button[i].setTag(c3.getInt(0));
              button[i].setText(String.format(Locale.US, "…", i));
              g_View[i].setTag(String.valueOf(i));
-             //g_View[i].setText(String.format(Locale.US, "%d.", i));
-             //TextView textView7 = findViewById(R.id.textView7);
-             g_View[i].setText(String.format("%d.%s", c2.getInt(0), c2.getString(1)));
-             mov2 = c2.moveToNext();
-
+             g_View[i].setText(String.format("%d.%s", c3.getInt(0), c3.getString(1)));
              //横レイアウトの作成
              linearLayout[i].setOrientation(linearLayout[i].HORIZONTAL);
              linearLayout[i].setLayoutParams(
@@ -281,38 +274,17 @@ public class MainActivity extends AppCompatActivity
              linearLayout[i].addView(button[i]);
              g_View[i].setLayoutParams(buttonLayoutParams);
 
-
-             // Listnerをセット
-//            button[i].setOnClickListener(new View.OnClickListener() {
-//                public void onClick(View view) {
-//                    // View からTagを取り出す
-//                    textView.setText(String.format(Locale.US,
-//                            "Button: %s", view.getTag().toString()));
-//                }
-//            });
              //遷移する際のデータ渡し用
-//             final int goal_id = c2.getInt(0);
-//             final String goal_name = c2.getString(1);
-//             final String goal_memo = c2.getString(2);
-//             final int goal_progres = c2.getInt(3);
-//             final int goal_year = c2.getInt(4);
-//             final int goal_month = c2.getInt(5);
-//             final int goal_day = c2.getInt(6);
-//             final int goal_hour = c2.getInt(7);
-//             final int goal_minutes = c2.getInt(8);
-//             final int goal_category = c2.getInt(9);
-//             mov2 = c2.moveToNext();
-
-
-
-
+             mov3 = c3.moveToNext();
              //目標詳細画面への遷移
              button[i].setOnClickListener(new View.OnClickListener() {
                  @Override
                  public void onClick(View v) {
-//                     Intent intent = new Intent(getApplication(), UpdateActivity.class);
-//                     intent.putExtra("goal_id",goal_id);
-//                     intent.putExtra("goal_name",goal_name);
+
+                    //Tagでidを取得する
+                     Intent intent = new Intent(getApplication(), UpdateActivity.class);
+                     intent.putExtra("goal_id", (Integer) v.getTag());
+                     //intent.putExtra("goal_name",goal_name);
 //                     intent.putExtra("memo_text",goal_memo);
 //                     intent.putExtra("goal_progres",goal_progres);
 //                     intent.putExtra("goal_year",goal_year);
@@ -321,7 +293,7 @@ public class MainActivity extends AppCompatActivity
 //                     intent.putExtra("goal_hour",goal_hour);
 //                     intent.putExtra("goal_minutes",goal_minutes);
 //                     intent.putExtra("goal_category",goal_category);
-//                     startActivity(intent);
+                     startActivity(intent);
                  }
              });
          }
@@ -346,7 +318,7 @@ public class MainActivity extends AppCompatActivity
 //            //layout.addView(textView);
 //        }
 
-        c2.close();
+        c3.close();
         db.close();
 
 
@@ -360,7 +332,6 @@ public class MainActivity extends AppCompatActivity
         // TODO:scrollView一時退避
         //scrollView.addView(relative);
 
-        //S
 
         Button checkButton = (Button)findViewById(R.id.checkButton);
         checkButton.setOnClickListener(new View.OnClickListener() {

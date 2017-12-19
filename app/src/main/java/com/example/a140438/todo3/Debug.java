@@ -34,7 +34,7 @@ public class Debug extends Activity {
         while(mov){
             TextView tv = new TextView(this);
             tv.setText(String.format("%d, %s, %s, %d, %d/%d/%d %d-%d, %d",
-                    c.getInt(0), c.getString(1), c.getInt(2), c.getInt(3), c.getInt(4),
+                    c.getInt(0), c.getString(1), c.getString(2), c.getInt(3), c.getInt(4),
                     c.getInt(5), c.getInt(6), c.getInt(7), c.getInt(8), c.getInt(9)));
             mov = c.moveToNext();
             layout.addView(tv);
