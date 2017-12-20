@@ -43,7 +43,7 @@ public class UpdateActivity extends AppCompatActivity {
         //取得したデータを初期値として各項目にセット
         Calendar cal = Calendar.getInstance();
         year_now = cal.get(Calendar.YEAR);
-        
+
         final EditText edit_goal = findViewById(R.id.goal_text0);
         edit_goal.setText(c.getString(1));
 
