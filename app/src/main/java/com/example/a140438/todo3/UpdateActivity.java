@@ -1,68 +1,177 @@
 package com.example.a140438.todo3;
 
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.NumberPicker;
 import android.widget.RadioGroup;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
-public class UpdateActivity extends AppCompatActivity {
+import java.util.Calendar;
 
-    String goal_name,goal_memo;
-    int goal_progres,goal_year,goal_month,goal_day,goal_hour,goal_minutes,goal_category;
+public class UpdateActivity extends AppCompatActivity {
+    int seekInt,goal_category,year_now;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_update);
-        //値受け取り
+
+        final TextView textView100 = (TextView)findViewById(R.id.textView100);
+
+        //前の画面から引き継いだgoal_idでデータ取得
         Intent intent = getIntent();
-        //目標id
-        int goal_id = intent.getIntExtra("goal_id",0);
-        EditText edit_goal =findViewById(R.id.goal_text0);
-        edit_goal.setText(String.valueOf(goal_id));
+        final int goal_id = intent.getIntExtra("goal_id",0);
 
-        //目標名
-//        Intent intent = getIntent();
-//        goal_name = intent.getStringExtra("goal_name");
-//        EditText edit_goal =findViewById(R.id.goal_text0);
-//        edit_goal.setText(goal_name);
-//        //メモ
-//        goal_memo = intent.getStringExtra("goal_memo");
-//        EditText edit_memo =findViewById(R.id.memo_text);
-//        edit_memo.setText(goal_memo);
-//        //進捗率
-//        goal_progres = intent.getIntExtra("goal_progres",0);
-//        SeekBar seekBar =findViewById(R.id.seekBar);
-//        seekBar.setProgress(goal_progres);
-//        //年
-//        goal_year = intent.getIntExtra("goal_year",0);
-//        NumberPicker Year_Picker =findViewById(R.id.numberPicker1);
-//        Year_Picker.setValue(goal_year);
-//        //月
-//        goal_month = intent.getIntExtra("goal_month",0);
-//        NumberPicker Month_Picker =findViewById(R.id.numberPicker2);
-//        Month_Picker.setValue(goal_year);
-//        //日
-//        goal_day = intent.getIntExtra("goal_month",0);
-//        NumberPicker Day_Picker =findViewById(R.id.numberPicker3);
-//        Day_Picker.setValue(goal_year);
-//        //時
-//        goal_hour = intent.getIntExtra("goal_month",0);
-//        NumberPicker Hour_Picker =findViewById(R.id.numberPicker4);
-//        Hour_Picker.setValue(goal_year);
-//        //分
-//        goal_minutes = intent.getIntExtra("goal_month",0);
-//        NumberPicker Minutes_Picker =findViewById(R.id.numberPicker5);
-//        Minutes_Picker.setValue(goal_year);
-//        //カテゴリー
-//        goal_category = intent.getIntExtra("goal_name",0);
-//        RadioGroup RadioGrouop =findViewById(R.id.UpdateRadio);
-//        RadioGrouop.check(goal_category);
+        OpenHelper helper = new OpenHelper(this);
+        final SQLiteDatabase db = helper.getWritableDatabase();
+
+        Cursor c = null;
+
+        String sql = "SELECT * FROM goal WHERE goal_id = " + goal_id + ";";
+        c = db.rawQuery(sql, new String[]{});
+
+        c.moveToFirst();
 
 
+        //取得したデータを初期値として各項目にセット
+        Calendar cal = Calendar.getInstance();
+        year_now = cal.get(Calendar.YEAR);
+        
+        final EditText edit_goal = findViewById(R.id.goal_text0);
+        edit_goal.setText(c.getString(1));
+
+        final EditText edit_memo =findViewById(R.id.memo_text);
+        edit_memo.setText(c.getString(2));
+
+        SeekBar seekBar =findViewById(R.id.seekBar);
+        seekBar.setProgress(c.getInt(3) / 10);
+
+        final NumberPicker Year_Picker =findViewById(R.id.numberPicker1);
+        Year_Picker.setValue(c.getInt(4));
+        Year_Picker.setMaxValue(year_now + 10);
+        Year_Picker.setMinValue(year_now);
+
+        final NumberPicker Month_Picker =findViewById(R.id.numberPicker2);
+        Month_Picker.setValue(c.getInt(5));
+        Month_Picker.setMaxValue(12);
+        Month_Picker.setMinValue(1);
+
+        final NumberPicker Day_Picker =findViewById(R.id.numberPicker3);
+        Day_Picker.setValue(c.getInt(6));
+        Day_Picker.setMaxValue(31);
+        Day_Picker.setMinValue(1);
+
+        final NumberPicker Hour_Picker =findViewById(R.id.numberPicker4);
+        Hour_Picker.setValue(c.getInt(7));
+        Hour_Picker.setMaxValue(23);
+        Hour_Picker.setMinValue(0);
+
+        final NumberPicker Minutes_Picker =findViewById(R.id.numberPicker5);
+        Minutes_Picker.setValue(c.getInt(8));
+        Minutes_Picker.setMaxValue(59);
+        Minutes_Picker.setMinValue(0);
+
+        final RadioGroup RadioGroup =findViewById(R.id.UpdateRadio);
+
+        if(c.getInt(9) == 0){
+            RadioGroup.check(R.id.radioButton00);
+        }
+        else if(c.getInt(9) == 1){
+            RadioGroup.check(R.id.radioButton10);
+        }
+        else if(c.getInt(9) == 2){
+            RadioGroup.check(R.id.radioButton20);
+        }
+        else{
+            RadioGroup.check(R.id.radioButton30);
+        }
+
+
+        //値の格納
+
+        seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
+                textView100.setText(seekBar.getProgress() * 100 + " %");
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+                seekInt = seekBar.getProgress() * 10;
+            }
+        });
+
+        RadioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup radioGroup, int i) {
+                int checkedId = RadioGroup.getCheckedRadioButtonId();
+
+                switch (checkedId){
+                    case R.id.radioButton00:
+                        goal_category = 0;
+                        break;
+                    case R.id.radioButton10:
+                        goal_category = 1;
+                        break;
+                    case R.id.radioButton20:
+                        goal_category = 2;
+                        break;
+                    case R.id.radioButton30:
+                        goal_category = 3;
+                        break;
+                }
+            }
+        });
+
+
+        //削除ボタンの機能
+        Button delete_Button = (Button)findViewById(R.id.delete_button);
+        delete_Button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent dbIntent_delete = new Intent(UpdateActivity.this,
+                        MainActivity.class);
+
+                String delete_sql = "DELETE * FROM goal WHERE goal_id = " + goal_id + ";";
+
+                db.execSQL(delete_sql);
+
+                startActivity(dbIntent_delete);
+            }
+        });
+
+
+        //完了ボタンの機能
+        Button add_Button20 = (Button)findViewById(R.id.add_button20);
+        add_Button20.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent dbIntent_update = new Intent(UpdateActivity.this,
+                        MainActivity.class);
+
+                String update_sql = "UPDATE goal SET goal_name = '" + edit_goal.getText().toString() + "'," +
+                             " memo = '" + edit_memo.getText().toString() + "', progress = " + seekInt + "," +
+                             " year = " + Year_Picker.getValue() + ", month = " + Month_Picker.getValue() + "," +
+                             " day = " + Day_Picker.getValue() + ", hour = " + Hour_Picker.getValue() + "," +
+                             " minutes = " + Minutes_Picker.getValue() + ", category = " + goal_category + "" +
+                             " WHERE goal_id = " + goal_id + ";";
+
+                db.execSQL(update_sql);
+
+                startActivity(dbIntent_update);
+            }
+        });
     }
 }
