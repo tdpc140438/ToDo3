@@ -32,7 +32,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/add_button20"
+        android:id="@+id/delete_button"
         android:layout_width="129dp"
         android:layout_height="42dp"
         android:text="削除"
@@ -44,7 +44,7 @@
         app:layout_constraintVertical_bias="0.965" />
 
     <Button
-        android:id="@+id/add_button30"
+        android:id="@+id/add_button20"
         android:layout_width="129dp"
         android:layout_height="42dp"
         android:text="完了"
@@ -97,6 +97,7 @@
         android:id="@+id/seekBar0"
         android:layout_width="246dp"
         android:layout_height="51dp"
+        android:max="10"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.884"
