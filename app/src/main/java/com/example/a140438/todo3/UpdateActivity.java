@@ -47,36 +47,46 @@ public class UpdateActivity extends AppCompatActivity {
         final EditText edit_goal = findViewById(R.id.goal_text0);
         edit_goal.setText(c.getString(1));
 
-        final EditText edit_memo =findViewById(R.id.memo_text);
+        final EditText edit_memo = findViewById(R.id.memo_text0);
         edit_memo.setText(c.getString(2));
 
-        SeekBar seekBar =findViewById(R.id.seekBar);
+//        String str = null;
+//        final EditText edit_memo =findViewById(R.id.memo_text);
+//
+//        if(str.equals(c.getString(2))){
+//            edit_memo.setText("");
+//        }
+//        else{
+//            edit_memo.setText(c.getString(2));
+//        }
+
+        SeekBar seekBar =findViewById(R.id.seekBar0);
         seekBar.setProgress(c.getInt(3) / 10);
 
-        final NumberPicker Year_Picker =findViewById(R.id.numberPicker1);
-        Year_Picker.setValue(c.getInt(4));
+        final NumberPicker Year_Picker =findViewById(R.id.numberPicker10);
         Year_Picker.setMaxValue(year_now + 10);
         Year_Picker.setMinValue(year_now);
+        Year_Picker.setValue(c.getInt(4));
 
-        final NumberPicker Month_Picker =findViewById(R.id.numberPicker2);
-        Month_Picker.setValue(c.getInt(5));
+        final NumberPicker Month_Picker =findViewById(R.id.numberPicker20);
         Month_Picker.setMaxValue(12);
         Month_Picker.setMinValue(1);
+        Month_Picker.setValue(c.getInt(5));
 
-        final NumberPicker Day_Picker =findViewById(R.id.numberPicker3);
-        Day_Picker.setValue(c.getInt(6));
+        final NumberPicker Day_Picker =findViewById(R.id.numberPicker30);
         Day_Picker.setMaxValue(31);
         Day_Picker.setMinValue(1);
+        Day_Picker.setValue(c.getInt(6));
 
-        final NumberPicker Hour_Picker =findViewById(R.id.numberPicker4);
-        Hour_Picker.setValue(c.getInt(7));
+        final NumberPicker Hour_Picker =findViewById(R.id.numberPicker40);
         Hour_Picker.setMaxValue(23);
         Hour_Picker.setMinValue(0);
+        Hour_Picker.setValue(c.getInt(7));
 
-        final NumberPicker Minutes_Picker =findViewById(R.id.numberPicker5);
-        Minutes_Picker.setValue(c.getInt(8));
+        final NumberPicker Minutes_Picker =findViewById(R.id.numberPicker50);
         Minutes_Picker.setMaxValue(59);
         Minutes_Picker.setMinValue(0);
+        Minutes_Picker.setValue(c.getInt(8));
 
         final RadioGroup RadioGroup =findViewById(R.id.UpdateRadio);
 
@@ -95,11 +105,11 @@ public class UpdateActivity extends AppCompatActivity {
 
 
         //値の格納
-
+        textView100.setText(seekBar.getProgress() * 10 + " %");
         seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
-                textView100.setText(seekBar.getProgress() * 100 + " %");
+                textView100.setText(seekBar.getProgress() * 10 + " %");
             }
 
             @Override
@@ -144,7 +154,7 @@ public class UpdateActivity extends AppCompatActivity {
                 Intent dbIntent_delete = new Intent(UpdateActivity.this,
                         MainActivity.class);
 
-                String delete_sql = "DELETE * FROM goal WHERE goal_id = " + goal_id + ";";
+                String delete_sql = "DELETE FROM goal WHERE goal_id = " + goal_id + ";";
 
                 db.execSQL(delete_sql);
 

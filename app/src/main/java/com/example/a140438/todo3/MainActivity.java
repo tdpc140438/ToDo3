@@ -178,7 +178,7 @@ public class MainActivity extends AppCompatActivity
              button[i].setTag(c3.getInt(0));
              button[i].setText(String.format(Locale.US, "…", i));
              g_View[i].setTag(c3.getInt(0));
-             g_View[i].setText(String.format("%d.%s", c3.getInt(0), c3.getString(1)));
+             g_View[i].setText(String.format("%d.%s",i, c3.getString(1)));
              //横レイアウトの作成
              linearLayout[i].setOrientation(linearLayout[i].HORIZONTAL);
              linearLayout[i].setLayoutParams(
