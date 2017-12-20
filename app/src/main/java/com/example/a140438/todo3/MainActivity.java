@@ -44,6 +44,7 @@ public class MainActivity extends AppCompatActivity
     private Button button[] = new Button[50];
     private TextView g_View[] = new TextView[50];
     private LinearLayout linearLayout [] = new LinearLayout[50];
+    private  int progres_key = 0 ;
 
 
     @SuppressLint("ResourceType")
@@ -98,9 +99,6 @@ public class MainActivity extends AppCompatActivity
 
 
         //下に書くようにする。
-        //12/8
-
-
         //setContentView(R.layout.activity_main);
         //ScrollViewにテキストの生成、テキストとボタン
 
@@ -121,31 +119,22 @@ public class MainActivity extends AppCompatActivity
         //縦レイアウト
         LinearLayout layout = (LinearLayout) findViewById(R.id.length_layout);
 
-//        //横レイアウト
-//        LinearLayout layout2 = new LinearLayout(MainActivity.this);
-//        layout2.setOrientation(LinearLayout.HORIZONTAL);
-//        layout2.setLayoutParams(
-//                new LinearLayout.LayoutParams(
-//                        LinearLayout.LayoutParams.WRAP_CONTENT,    //文字列の幅に合わせる
-//                        LinearLayout.LayoutParams.WRAP_CONTENT));  //文字列の高さに合わせる
-
-
         // dp 設定
         scale = getResources().getDisplayMetrics().density;
 
 
-            // TextView インスタンス生成（本実装時はループを利用して設定）
-            final TextView textView = new TextView(this);
-            textView.setText("テスト目標1");
+        // TextView インスタンス生成（本実装時はループを利用して設定）
+        final TextView textView = new TextView(this);
+        textView.setText("テスト目標1");
 
-            // setMargins (int left, int top, int right, int bottom)
+        // setMargins (int left, int top, int right, int bottom)
 
-            RelativeLayout.LayoutParams textLayoutParams = new RelativeLayout.LayoutParams(
-                    RelativeLayout.LayoutParams.WRAP_CONTENT,
-                    RelativeLayout.LayoutParams.WRAP_CONTENT);
+        RelativeLayout.LayoutParams textLayoutParams = new RelativeLayout.LayoutParams(
+                RelativeLayout.LayoutParams.WRAP_CONTENT,
+                RelativeLayout.LayoutParams.WRAP_CONTENT);
 
-            textLayoutParams.setMargins((int) (150 * scale), (int) (300 * scale), 0, 0);
-            textView.setLayoutParams(textLayoutParams);
+        textLayoutParams.setMargins((int) (150 * scale), (int) (300 * scale), 0, 0);
+        textView.setLayoutParams(textLayoutParams);
 
 
             //id生成
@@ -159,76 +148,11 @@ public class MainActivity extends AppCompatActivity
         //layout2.addView(textView);
 //
 //
-//        // ボタンの設定
-            Button button1 = new Button(this);
-            button1.setText("…");
-            //id生成
-            //int Buttonid = View.generateViewId();
-            //idセット
-            //button1.setId(Buttonid);
-
-
 
         LinearLayout.LayoutParams buttonLayoutParams = new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.WRAP_CONTENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT);
 
-
-        // TODO:relactive一時退避
-        // relative.addView(button);
-
-        //横レイアウトへ追加
-       //layout2.addView(button1);
-        //縦レイアウトへ横レイアウトを追加
-        //layout.addView(layout2);
-
-        //レイアウトの整列
-        // TODO:relactive一時退避
-//        relative.setGravity(Gravity.CENTER);
-//        setContentView(relative);
-
-
-        // リスナーをボタンに登録
-        textView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // flagがtrueの時
-                if (flag) {
-                    //上のテキストビューを変更する処理をかけば
-
-                    TextView textView1 =findViewById(R.id.textView7);
-                    textView1.setText("テキストが");
-                    flag = false;
-                }
-                // flagがfalseの時
-                else {
-                    TextView textView2 =findViewById(R.id.textView7);
-                    textView2.setText("変わるよ");
-                    flag = true;
-                }
-            }
-        });
-        //テキスト変更
-        button1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // flagがtrueの時
-                if (flag) {
-                    //上のテキストビューを変更する処理をかけば
-
-                    TextView textView1 =findViewById(R.id.textView7);
-                    textView1.setText("テキストが");
-                    flag = false;
-                }
-                // flagがfalseの時
-                else {
-                    TextView textView2 =findViewById(R.id.textView7);
-                    textView2.setText("変わるよ");
-                    flag = true;
-                }
-            }
-        });
-        //ボタンリスナ生成カウンタ初期化
         Cursor c3 = null;
         //select
         String sql3 = "SELECT * FROM goal;";
@@ -250,10 +174,10 @@ public class MainActivity extends AppCompatActivity
              //idセット
              button[i].setId(Buttonid);
 
-             // Tagを設定する
+             // Tagを設定する,ボタンとビューそれぞれに目標idを設定
              button[i].setTag(c3.getInt(0));
              button[i].setText(String.format(Locale.US, "…", i));
-             g_View[i].setTag(String.valueOf(i));
+             g_View[i].setTag(c3.getInt(0));
              g_View[i].setText(String.format("%d.%s", c3.getInt(0), c3.getString(1)));
              //横レイアウトの作成
              linearLayout[i].setOrientation(linearLayout[i].HORIZONTAL);
@@ -296,6 +220,69 @@ public class MainActivity extends AppCompatActivity
                      startActivity(intent);
                  }
              });
+             //目標名をタップした時のテキスト表示
+             g_View[i].setOnClickListener(new View.OnClickListener() {
+                     @Override
+                     public void onClick(View v) {
+                         //Tagでidを取得する
+                     TextView words_textView =findViewById(R.id.words_textView);
+                     //1.idから進捗率を取得する。
+                     //2.progres_keyに進捗率に対応した値をセットする。
+                     //3.progres_keyを検索条件としてセリフテーブルからデータを取得する。
+
+                     Cursor c4 = null;
+                     //select
+                     String sql4 = "SELECT * FROM goal WHERE goal_id = " + v.getTag() + ";";
+                     c4 = db.rawQuery(sql4, new String[]{});
+                     boolean mov4 = c4.moveToFirst();
+                     progres_key = c4.getInt(3);
+                     c4.close();
+
+                     //progres_keyを変換
+                     switch (progres_key){
+                         case 0:
+                             progres_key=4;
+                             break;
+                         case 10:
+                             progres_key=5;
+                             break;
+                         case 20:
+                             progres_key=6;
+                             break;
+                         case 30:
+                             progres_key=7;
+                             break;
+                         case 40:
+                             progres_key=8;
+                             break;
+                         case 50:
+                             progres_key=9;
+                             break;
+                         case 60:
+                             progres_key=10;
+                             break;
+                         case 70:
+                             progres_key=11;
+                             break;
+                         case 80:
+                             progres_key=12;
+                             break;
+                         case 90:
+                             progres_key=13;
+                             break;
+                     }
+
+                     Cursor c5 = null;
+                     //select
+                     String sql5 = "SELECT * FROM words WHERE switch = " + progres_key + ";";
+                     c5 = db.rawQuery(sql5, new String[]{});
+                     boolean mov5 = c5.moveToFirst();
+                         words_textView.setText(String.format("%s", c5.getString(2)));
+                     c5.close();
+
+
+                 }
+             });
          }
          else {
             break;
@@ -319,7 +306,7 @@ public class MainActivity extends AppCompatActivity
 //        }
 
         c3.close();
-        db.close();
+        //db.close();
 
 
 
@@ -327,11 +314,6 @@ public class MainActivity extends AppCompatActivity
         //生成したボタンの動き（遷移）
         //画像の入れ替え
         //テキストビューとボタンのレイアウト
-
-
-        // TODO:scrollView一時退避
-        //scrollView.addView(relative);
-
 
         Button checkButton = (Button)findViewById(R.id.checkButton);
         checkButton.setOnClickListener(new View.OnClickListener() {
