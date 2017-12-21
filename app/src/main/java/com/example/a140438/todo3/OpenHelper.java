@@ -141,7 +141,7 @@ public class OpenHelper extends SQLiteOpenHelper{
                 "VALUES('課題Ex02を終わらせる', '川名先生に提出', 0,  2017, 12, 11, 17, 30, 0)");
 
 
-
+        db.execSQL("DROP TABLE user;");
 
 
 
