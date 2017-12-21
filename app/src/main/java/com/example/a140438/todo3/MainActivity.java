@@ -31,6 +31,8 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import android.widget.Button;
 
@@ -208,22 +210,17 @@ public class MainActivity extends AppCompatActivity
                     //Tagでidを取得する
                      Intent intent = new Intent(getApplication(), UpdateActivity.class);
                      intent.putExtra("goal_id", (Integer) v.getTag());
-                     //intent.putExtra("goal_name",goal_name);
-//                     intent.putExtra("memo_text",goal_memo);
-//                     intent.putExtra("goal_progres",goal_progres);
-//                     intent.putExtra("goal_year",goal_year);
-//                     intent.putExtra("goal_month",goal_month);
-//                     intent.putExtra("goal_day",goal_day);
-//                     intent.putExtra("goal_hour",goal_hour);
-//                     intent.putExtra("goal_minutes",goal_minutes);
-//                     intent.putExtra("goal_category",goal_category);
-                     startActivity(intent);
+                     //返しのデータを受け取るため            startActivity(intent);
+                     int requestCode = 1000;
+                     startActivityForResult( intent, requestCode );
                  }
              });
+
              //目標名をタップした時のテキスト表示
              g_View[i].setOnClickListener(new View.OnClickListener() {
                      @Override
                      public void onClick(View v) {
+
                          //Tagでidを取得する
                      TextView words_textView =findViewById(R.id.words_textView);
                      //1.idから進捗率を取得する。
@@ -241,44 +238,59 @@ public class MainActivity extends AppCompatActivity
                      //progres_keyを変換
                      switch (progres_key){
                          case 0:
-                             progres_key=4;
+                             progres_key=14;
                              break;
                          case 10:
-                             progres_key=5;
+                             progres_key=15;
                              break;
                          case 20:
-                             progres_key=6;
+                             progres_key=16;
                              break;
                          case 30:
-                             progres_key=7;
+                             progres_key=17;
                              break;
                          case 40:
-                             progres_key=8;
+                             progres_key=18;
                              break;
                          case 50:
-                             progres_key=9;
+                             progres_key=19;
                              break;
                          case 60:
-                             progres_key=10;
+                             progres_key=20;
                              break;
                          case 70:
-                             progres_key=11;
+                             progres_key=21;
                              break;
                          case 80:
-                             progres_key=12;
+                             progres_key=22;
                              break;
                          case 90:
-                             progres_key=13;
+                             progres_key=23;
                              break;
                      }
 
                      Cursor c5 = null;
-                     //select
+                     Cursor c_User_Name = null;
+                     //進捗率に応じてテキストを取得する。
                      String sql5 = "SELECT * FROM words WHERE switch = " + progres_key + ";";
                      c5 = db.rawQuery(sql5, new String[]{});
+                    //設定しているユーザー名を取得する。
+                     String sql_User_Name = "SELECT * FROM user ;";
+                     c_User_Name = db.rawQuery(sql_User_Name, new String[]{});
                      boolean mov5 = c5.moveToFirst();
-                         words_textView.setText(String.format("%s", c5.getString(2)));
-                     c5.close();
+                     boolean mov_User = c_User_Name.moveToFirst();
+
+                     String str = c5.getString(2);
+                     String regex = "name";
+
+                     Pattern p = Pattern.compile(regex);
+
+                     Matcher m = p.matcher(str);
+
+                     String result = m.replaceAll(c_User_Name.getString(1));
+                     words_textView.setText(result);
+                     //words_textView.setText(String.format("%s", c5.getString(2)));
+                     c_User_Name.close();
 
 
                  }
@@ -288,33 +300,13 @@ public class MainActivity extends AppCompatActivity
             break;
          }
         }
-
-//        //目標名表示
-//
-//        Cursor c2 = null;
-//        //select
-//        String sql2 = "SELECT goal_name FROM goal;";
-//        c2 = db.rawQuery(sql2, new String[]{});
-//
-//        boolean mov2 = c2.moveToFirst();
-//
-//        while(mov2){
-//            TextView textView7 = findViewById(R.id.textView7);
-//            textView7.setText(String.format("目標名 : %s", c2.getString(0)));
-//            mov2 = c2.moveToNext();
-//            //layout.addView(textView);
-//        }
-
         c3.close();
-        //db.close();
-
-
-
         //TODO:12/12
         //生成したボタンの動き（遷移）
         //画像の入れ替え
         //テキストビューとボタンのレイアウト
 
+        //dbチェックボタン
         Button checkButton = (Button)findViewById(R.id.checkButton);
         checkButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -409,5 +401,68 @@ public class MainActivity extends AppCompatActivity
         final Date date = new Date(System.currentTimeMillis());
         return df.format(date);
     }
+
+    //return
+    protected void onActivityResult(int requestCode , int RESULT_OK , Intent dbIntent_update){
+        //SQLite
+        OpenHelper helper = new OpenHelper(this);
+        final SQLiteDatabase db = helper.getWritableDatabase();
+
+        super.onActivityResult(requestCode,RESULT_OK,dbIntent_update);
+       Intent intent = getIntent();
+       int seekInt = intent.getIntExtra("seekInt",0);
+        if (requestCode == RESULT_OK){
+            //seekintを変換
+            switch (seekInt){
+                case 0:
+                    seekInt=4;
+                    break;
+                case 10:
+                    seekInt=5;
+                    break;
+                case 20:
+                    seekInt=6;
+                    break;
+                case 30:
+                    seekInt=7;
+                    break;
+                case 40:
+                    seekInt=8;
+                    break;
+                case 50:
+                    seekInt=9;
+                    break;
+                case 60:
+                    seekInt=10;
+                    break;
+                case 70:
+                    seekInt=11;
+                    break;
+                case 80:
+                    seekInt=12;
+                    break;
+                case 90:
+                    seekInt=13;
+                    break;
+            }
+
+            Cursor c_progres = null;
+            //進捗率に応じてテキストを取得する。
+            String sql_progres = "SELECT * FROM words WHERE switch = " + seekInt + ";";
+            c_progres = db.rawQuery(sql_progres, new String[]{});
+
+
+
+
+
+        }
+
+
+    }
+
+
+
+
+
 
 }
