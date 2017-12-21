@@ -98,6 +98,7 @@ public class UserActivity extends AppCompatActivity {
                 c3 = db.rawQuery(id_sql, new String[]{});
                 c3.moveToFirst();
 
+                dbIntent.putExtra("user_name", user_name_edit.getText().toString());
                 dbIntent.putExtra("use_package_id", c3.getString(0));
 
                 startActivity(dbIntent);
