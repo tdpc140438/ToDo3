@@ -229,7 +229,7 @@ public class MainActivity extends AppCompatActivity
                      //1.idから進捗率を取得する。
                      //2.progres_keyに進捗率に対応した値をセットする。
                      //3.progres_keyを検索条件としてセリフテーブルからデータを取得する。
-
+                         //ToDo:package_id
                      Cursor c4 = null;
                      //select
                      String sql4 = "SELECT * FROM goal WHERE goal_id = " + v.getTag() + ";";
