@@ -156,8 +156,13 @@ public class OpenHelper extends SQLiteOpenHelper{
 
 		if(oldVersion == 1){
 			//詳しい変更内容
-            db.execSQL("DELETE FROM user WHERE user_id = 1");
-            db.execSQL("ALTER TABLE user ADD use_package TEXT;");
+            db.execSQL("DROP TABLE user;");
+            db.execSQL("CREATE TABLE user(" +
+                    " user_id INTEGER PRIMARY KEY AUTOINCREMENT," +
+                    " user_name TEXT," +
+                    " user_level INTEGER," +
+                    " exp INTEGER," +
+                    " use_package TEXT)");
             db.execSQL("INSERT INTO user(user_name, user_level, exp, use_package) VALUES('テスター', 1, 0, 'ツンデレ幼馴染')");
 		}
 
