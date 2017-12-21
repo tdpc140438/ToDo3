@@ -25,9 +25,13 @@ public class Debug extends Activity {
         SQLiteDatabase db = openHelper.getReadableDatabase();
 
         Cursor c = null;
+        Cursor c2 = null;
 
         String sql = "SELECT * FROM goal;";
         c = db.rawQuery(sql, new String[]{});
+
+        String sql2 = "SELECT * FROM user;";
+        c2 = db.rawQuery(sql2, new String[]{});
 
         boolean mov = c.moveToFirst();
 
@@ -40,7 +44,18 @@ public class Debug extends Activity {
             layout.addView(tv);
         }
 
+        boolean mov2 = c2.moveToFirst();
+
+        while(mov2){
+            TextView tv2 = new TextView(this);
+            tv2.setText(String.format("%d, %s, %d, %d, %s",
+                    c.getInt(0), c.getString(1), c.getInt(2), c.getInt(3), c.getString(4)));
+            mov2 = c2.moveToNext();
+            layout.addView(tv2);
+        }
+
         c.close();
+        c2.close();
         db.close();
     }
 }
