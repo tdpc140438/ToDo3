@@ -49,7 +49,7 @@ public class Debug extends Activity {
         while(mov2){
             TextView tv2 = new TextView(this);
             tv2.setText(String.format("%d, %s, %d, %d, %s",
-                    c.getInt(0), c.getString(1), c.getInt(2), c.getInt(3), c.getString(4)));
+                    c2.getInt(0), c2.getString(1), c2.getInt(2), c2.getInt(3), c2.getString(4)));
             mov2 = c2.moveToNext();
             layout.addView(tv2);
         }
