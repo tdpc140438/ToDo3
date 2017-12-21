@@ -139,11 +139,14 @@ public class OpenHelper extends SQLiteOpenHelper{
         db.execSQL("INSERT INTO goal(goal_name, memo, progress, year, month, day, hour, minutes, category)" +
                 "VALUES('課題Ex02を終わらせる', '川名先生に提出', 0,  2017, 12, 11, 17, 30, 0)");
 
-        /*
-        db.execSQL("DELETE FROM user WHERE user_id = 1");
-        db.execSQL("ALTER TABLE user ADD use_package TEXT;");
+        db.execSQL("DROP TABLE user;");
+        db.execSQL("CREATE TABLE user(" +
+                " user_id INTEGER PRIMARY KEY AUTOINCREMENT," +
+                " user_name TEXT," +
+                " user_level INTEGER," +
+                " exp INTEGER," +
+                " use_package TEXT)");
         db.execSQL("INSERT INTO user(user_name, user_level, exp, use_package) VALUES('テスター', 1, 0, 'ツンデレ幼馴染')");
-        */
 
     }
 
