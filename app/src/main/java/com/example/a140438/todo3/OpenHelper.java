@@ -139,16 +139,7 @@ public class OpenHelper extends SQLiteOpenHelper{
                 "VALUES('プレゼンの資料を作る', '', 0,  2017, 12, 11, 17, 30, 0)");
         db.execSQL("INSERT INTO goal(goal_name, memo, progress, year, month, day, hour, minutes, category)" +
                 "VALUES('課題Ex02を終わらせる', '川名先生に提出', 0,  2017, 12, 11, 17, 30, 0)");
-
-
-        db.execSQL("DROP TABLE user;");
-
-
-
-
-
-
-
+        
     }
 
     @Override
