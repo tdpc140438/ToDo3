@@ -290,10 +290,71 @@ public class MainActivity extends AppCompatActivity
                      words_textView.setText(result);
                      //words_textView.setText(String.format("%s", c5.getString(2)));
                      c_User_Name.close();
-
-
                  }
              });
+
+             //進捗率を変更した際の台詞
+             TextView words_textView =findViewById(R.id.words_textView);
+             Intent intent = getIntent();
+             int seekInt = intent.getIntExtra("seekInt",0);
+             //seekintを変換
+             switch (seekInt) {
+                 case 0:
+                     seekInt = 4;
+                     break;
+                 case 10:
+                     seekInt = 5;
+                     break;
+                 case 20:
+                     seekInt = 6;
+                     break;
+                 case 30:
+                     seekInt = 7;
+                     break;
+                 case 40:
+                     seekInt = 8;
+                     break;
+                 case 50:
+                     seekInt = 9;
+                     break;
+                 case 60:
+                     seekInt = 10;
+                     break;
+                 case 70:
+                     seekInt = 11;
+                     break;
+                 case 80:
+                     seekInt = 12;
+                     break;
+                 case 90:
+                     seekInt = 13;
+                     break;
+             }
+
+             Cursor c_progres = null;
+             Cursor c_User_Name = null;
+             //進捗率に応じてテキストを取得する。
+             String sql_progres = "SELECT * FROM words WHERE switch = " + seekInt + ";";
+             c_progres = db.rawQuery(sql_progres, new String[]{});
+             //設定しているユーザー名を取得する。
+             String sql_User_Name = "SELECT * FROM user ;";
+             c_User_Name = db.rawQuery(sql_User_Name, new String[]{});
+             boolean mov5 = c_progres.moveToFirst();
+             boolean mov_User = c_User_Name.moveToFirst();
+
+             String str = c_progres.getString(2);
+             String regex = "name";
+
+             Pattern p = Pattern.compile(regex);
+
+             Matcher m = p.matcher(str);
+
+             String result = m.replaceAll(c_User_Name.getString(1));
+             words_textView.setText(result);
+             //words_textView.setText(String.format("%s", c5.getString(2)));
+             c_User_Name.close();
+
+
          }
          else {
             break;
@@ -401,7 +462,7 @@ public class MainActivity extends AppCompatActivity
         return df.format(date);
     }
 
-    //return
+    //進捗を変更した場合の処理の理想
     protected void onActivityResult(int requestCode , int RESULT_OK , Intent dbIntent_update){
         TextView words_textView =findViewById(R.id.words_textView);
         //SQLite
@@ -411,40 +472,40 @@ public class MainActivity extends AppCompatActivity
         super.onActivityResult(requestCode,RESULT_OK,dbIntent_update);
        Intent intent = getIntent();
        int seekInt = intent.getIntExtra("seekInt",0);
-        if (requestCode == RESULT_OK){
             //seekintを変換
-            switch (seekInt){
+            switch (seekInt) {
                 case 0:
-                    seekInt=4;
+                    seekInt = 4;
                     break;
                 case 10:
-                    seekInt=5;
+                    seekInt = 5;
                     break;
                 case 20:
-                    seekInt=6;
+                    seekInt = 6;
                     break;
                 case 30:
-                    seekInt=7;
+                    seekInt = 7;
                     break;
                 case 40:
-                    seekInt=8;
+                    seekInt = 8;
                     break;
                 case 50:
-                    seekInt=9;
+                    seekInt = 9;
                     break;
                 case 60:
-                    seekInt=10;
+                    seekInt = 10;
                     break;
                 case 70:
-                    seekInt=11;
+                    seekInt = 11;
                     break;
                 case 80:
-                    seekInt=12;
+                    seekInt = 12;
                     break;
                 case 90:
-                    seekInt=13;
+                    seekInt = 13;
                     break;
             }
+
             Cursor c_progres = null;
             Cursor c_User_Name = null;
             //進捗率に応じてテキストを取得する。
@@ -474,9 +535,3 @@ public class MainActivity extends AppCompatActivity
 
     }
 
-
-
-
-
-
-}
