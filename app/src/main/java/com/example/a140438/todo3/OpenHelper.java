@@ -7,13 +7,13 @@ import android.database.sqlite.SQLiteDatabase;
 public class OpenHelper extends SQLiteOpenHelper{
     public OpenHelper(Context context){
         //version1：DB・テーブルの作成
-        super(context, "TODO_DB", null, 1);
+        //super(context, "TODO_DB", null, 1);
 
         //以降、データベースに変更を加える際はversionを更新していく
         //使用していないversionのsuper～の記述はコメントアウトすること
 
         //version2：一部テーブルに初期データを追加
-        //super(context, "TODO_DB", null, 2);
+        super(context, "TODO_DB", null, 2);
 
         //version3：***
         //super(context, "TODO_DB", null, 3);
@@ -61,8 +61,7 @@ public class OpenHelper extends SQLiteOpenHelper{
                 " user_id INTEGER PRIMARY KEY AUTOINCREMENT," +
                 " user_name TEXT," +
                 " user_level INTEGER," +
-                " exp INTEGER," +
-                " use_package TEXT)");
+                " exp INTEGER)");
 
         //pictureテーブルの作成
         db.execSQL("CREATE TABLE picture(" +
@@ -132,14 +131,20 @@ public class OpenHelper extends SQLiteOpenHelper{
                 "VALUES('tsun_NORM_C', 'Tsundere', 'えっ！？ …別に、nameがいなかったからって退屈なんてしてないわよ！', 28)");
 
         //仮ユーザー入力(ユーザー登録機能作成時に消去すること)
-        db.execSQL("INSERT INTO user(user_name, user_level, exp, use_package) VALUES('テスター', 1, 0, 'ツンデレ幼馴染')");
+        db.execSQL("INSERT INTO user(user_name, user_level, exp) VALUES('テスター', 1, 0)");
 
         //goalテーブル
         db.execSQL("INSERT INTO goal(goal_name, memo, progress, year, month, day, hour, minutes, category)" +
                 "VALUES('プレゼンの資料を作る', '', 0,  2017, 12, 11, 17, 30, 0)");
         db.execSQL("INSERT INTO goal(goal_name, memo, progress, year, month, day, hour, minutes, category)" +
                 "VALUES('課題Ex02を終わらせる', '川名先生に提出', 0,  2017, 12, 11, 17, 30, 0)");
-        
+
+        /*
+        db.execSQL("DELETE FROM user WHERE user_id = 1");
+        db.execSQL("ALTER TABLE user ADD use_package TEXT;");
+        db.execSQL("INSERT INTO user(user_name, user_level, exp, use_package) VALUES('テスター', 1, 0, 'ツンデレ幼馴染')");
+        */
+
     }
 
     @Override
@@ -148,11 +153,14 @@ public class OpenHelper extends SQLiteOpenHelper{
 
         //version2でのアップグレード内容
         //version1→version2の時のみ起動する
-		/*
+
 		if(oldVersion == 1){
 			//詳しい変更内容
+            db.execSQL("DELETE FROM user WHERE user_id = 1");
+            db.execSQL("ALTER TABLE user ADD use_package TEXT;");
+            db.execSQL("INSERT INTO user(user_name, user_level, exp, use_package) VALUES('テスター', 1, 0, 'ツンデレ幼馴染')");
 		}
-		*/
+
 
         //version3でのアップグレード内容
         //version2→version3の時のみ起動する
