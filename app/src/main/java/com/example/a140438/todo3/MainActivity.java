@@ -220,9 +220,8 @@ public class MainActivity extends AppCompatActivity
              g_View[i].setOnClickListener(new View.OnClickListener() {
                      @Override
                      public void onClick(View v) {
-
+                         TextView words_textView =findViewById(R.id.words_textView);
                          //Tagでidを取得する
-                     TextView words_textView =findViewById(R.id.words_textView);
                      //1.idから進捗率を取得する。
                      //2.progres_keyに進捗率に対応した値をセットする。
                      //3.progres_keyを検索条件としてセリフテーブルからデータを取得する。
@@ -404,6 +403,7 @@ public class MainActivity extends AppCompatActivity
 
     //return
     protected void onActivityResult(int requestCode , int RESULT_OK , Intent dbIntent_update){
+        TextView words_textView =findViewById(R.id.words_textView);
         //SQLite
         OpenHelper helper = new OpenHelper(this);
         final SQLiteDatabase db = helper.getWritableDatabase();
@@ -445,14 +445,28 @@ public class MainActivity extends AppCompatActivity
                     seekInt=13;
                     break;
             }
-
             Cursor c_progres = null;
+            Cursor c_User_Name = null;
             //進捗率に応じてテキストを取得する。
             String sql_progres = "SELECT * FROM words WHERE switch = " + seekInt + ";";
             c_progres = db.rawQuery(sql_progres, new String[]{});
+            //設定しているユーザー名を取得する。
+            String sql_User_Name = "SELECT * FROM user ;";
+            c_User_Name = db.rawQuery(sql_User_Name, new String[]{});
+            boolean mov5 = c_progres.moveToFirst();
+            boolean mov_User = c_User_Name.moveToFirst();
 
+            String str = c_progres.getString(2);
+            String regex = "name";
 
+            Pattern p = Pattern.compile(regex);
 
+            Matcher m = p.matcher(str);
+
+            String result = m.replaceAll(c_User_Name.getString(1));
+            words_textView.setText(result);
+            //words_textView.setText(String.format("%s", c5.getString(2)));
+            c_User_Name.close();
 
 
         }
