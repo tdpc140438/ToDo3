@@ -61,19 +61,18 @@ public class OpenHelper extends SQLiteOpenHelper{
                 " user_id INTEGER PRIMARY KEY AUTOINCREMENT," +
                 " user_name TEXT," +
                 " user_level INTEGER," +
-                " exp INTEGER)");
+                " exp INTEGER," +
+                " use_package TEXT)");
 
         //pictureテーブルの作成
         db.execSQL("CREATE TABLE picture(" +
                 " picture_id INTEGER PRIMARY KEY AUTOINCREMENT," +
                 " picture BLOB )");
 
-        //仮ユーザー入力(ユーザー登録機能作成時に消去すること)
-        db.execSQL("INSERT INTO user(user_name, user_level, exp) VALUES('テスター', 1, 0)");
-
         //ツンデレ幼馴染パックINSERT
         db.execSQL("INSERT INTO package(package_id, package_name, unlock)" +
                 "VALUES('Tsundere', 'ツンデレ幼馴染', 1)");
+
         db.execSQL("INSERT INTO words(words_id,package_id,words_text,switch) " +
                 "VALUES('tsun_CHAR_A','Tsundere','ちょっと！どこ触ってんのよ！',1)");
         db.execSQL("INSERT INTO words(words_id,package_id,words_text,switch) " +
@@ -131,6 +130,9 @@ public class OpenHelper extends SQLiteOpenHelper{
                 "VALUES('tsun_NORM_B', 'Tsundere', 'さあ、今日も頑張っていきましょ！', 27)");
         db.execSQL("INSERT INTO words(words_id, package_id, words_text, switch)" +
                 "VALUES('tsun_NORM_C', 'Tsundere', 'えっ！？ …別に、nameがいなかったからって退屈なんてしてないわよ！', 28)");
+
+        //仮ユーザー入力(ユーザー登録機能作成時に消去すること)
+        db.execSQL("INSERT INTO user(user_name, user_level, exp, use_package) VALUES('テスター', 1, 0, 'ツンデレ幼馴染')");
 
         //goalテーブル
         db.execSQL("INSERT INTO goal(goal_name, memo, progress, year, month, day, hour, minutes, category)" +
