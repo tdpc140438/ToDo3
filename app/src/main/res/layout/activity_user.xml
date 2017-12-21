@@ -7,7 +7,7 @@
     tools:context="com.example.a140438.todo3.UserActivity">
 
     <Spinner
-        android:id="@+id/word_spiner"
+        android:id="@+id/word_spinner"
         android:layout_width="341dp"
         android:layout_height="58dp"
         app:layout_constraintBottom_toBottomOf="parent"
