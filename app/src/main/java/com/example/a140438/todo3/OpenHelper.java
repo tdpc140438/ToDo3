@@ -12,11 +12,11 @@ public class OpenHelper extends SQLiteOpenHelper{
         //以降、データベースに変更を加える際はversionを更新していく
         //使用していないversionのsuper～の記述はコメントアウトすること
 
-        //version2：一部テーブルに初期データを追加
-        super(context, "TODO_DB", null, 2);
+        //version2：userテーブルの修正
+        //super(context, "TODO_DB", null, 2);
 
-        //version3：***
-        //super(context, "TODO_DB", null, 3);
+        //version3：pastテーブルの追加
+        super(context, "TODO_DB", null, 3);
     }
 
     @Override
@@ -139,6 +139,7 @@ public class OpenHelper extends SQLiteOpenHelper{
         db.execSQL("INSERT INTO goal(goal_name, memo, progress, year, month, day, hour, minutes, category)" +
                 "VALUES('課題Ex02を終わらせる', '川名先生に提出', 0,  2017, 12, 11, 17, 30, 0)");
 
+        //ver2
         db.execSQL("DROP TABLE user;");
         db.execSQL("CREATE TABLE user(" +
                 " user_id INTEGER PRIMARY KEY AUTOINCREMENT," +
@@ -148,6 +149,14 @@ public class OpenHelper extends SQLiteOpenHelper{
                 " use_package TEXT)");
         db.execSQL("INSERT INTO user(user_name, user_level, exp, use_package) VALUES('テスター', 1, 0, 'ツンデレ幼馴染')");
 
+        //ver3
+        db.execSQL("CREATE TABLE past(" +
+                " past_id INTEGER PRIMARY KEY AUTOINCREMENT," +
+                " past_name TEXT," +
+                " year INTEGER," +
+                " month INTEGER," +
+                " day INTEGER," +
+                " TorF INTEGER)");
     }
 
     @Override
@@ -172,10 +181,17 @@ public class OpenHelper extends SQLiteOpenHelper{
 
         //version3でのアップグレード内容
         //version2→version3の時のみ起動する
-		/*
+
 		if(oldVersion == 2){
 			//詳しい変更内容
+            db.execSQL("CREATE TABLE past(" +
+                    " past_id INTEGER PRIMARY KEY AUTOINCREMENT," +
+                    " past_name TEXT," +
+                    " year INTEGER," +
+                    " month INTEGER," +
+                    " day INTEGER," +
+                    " TorF INTEGER)");
 		}
-		*/
+
     }
 }
