@@ -31,6 +31,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
+import java.util.Random;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -292,9 +293,15 @@ public class MainActivity extends AppCompatActivity
                      c_User_Name.close();
                  }
              });
+             //起動後のテキスト表示
+             TextView words_textView =findViewById(R.id.words_textView);
+             int num;
+             num=(int)(Math.random()*3)+26;
+
+
 
              //進捗率を変更した際の台詞
-             TextView words_textView =findViewById(R.id.words_textView);
+
              Intent intent = getIntent();
              int seekInt = intent.getIntExtra("seekInt",0);
              //seekintを変換
