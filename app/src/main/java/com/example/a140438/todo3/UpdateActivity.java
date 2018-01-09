@@ -181,7 +181,8 @@ public class UpdateActivity extends AppCompatActivity {
                 db.execSQL(update_sql);
                 dbIntent_update.putExtra("seekInt", seekInt);
                 setResult(RESULT_OK,dbIntent_update);
-                startActivity(dbIntent_update);
+                //startActivity(dbIntent_update);
+                finish();
             }
         });
     }

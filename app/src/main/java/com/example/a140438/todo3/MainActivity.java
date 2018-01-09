@@ -48,7 +48,7 @@ public class MainActivity extends AppCompatActivity
     private TextView g_View[] = new TextView[50];
     private LinearLayout linearLayout [] = new LinearLayout[50];
     private  int progres_key = 0 ;
-
+    private int ram;
 
     @SuppressLint("ResourceType")
     @Override
@@ -167,6 +167,7 @@ public class MainActivity extends AppCompatActivity
 
         //動的ボタン生成部分
         for(int i = 1 ; i < button.length;i++) {
+            TextView words_textView =findViewById(R.id.words_textView);
          if(mov3) {
              button[i] = new Button(this);
              g_View[i] = new TextView(this);
@@ -293,15 +294,7 @@ public class MainActivity extends AppCompatActivity
                      c_User_Name.close();
                  }
              });
-             //起動後のテキスト表示
-             TextView words_textView =findViewById(R.id.words_textView);
-             int num;
-             num=(int)(Math.random()*3)+26;
-
-
-
              //進捗率を変更した際の台詞
-
              Intent intent = getIntent();
              int seekInt = intent.getIntExtra("seekInt",0);
              //seekintを変換
@@ -368,6 +361,39 @@ public class MainActivity extends AppCompatActivity
          }
         }
         c3.close();
+
+
+        //起動後のテキスト表示 1/9 プロト完成
+
+        TextView words_textView =findViewById(R.id.words_textView);
+        ram=(int)(Math.random()*3)+26;
+        //乱数生成確認
+        Log.d("Ram","変数 ram は「" + ram + "」");
+        Cursor c_Ramdom = null;
+        Cursor c_User_Name = null;
+        //乱数に応じてテキストを取得する。
+        String sql_ram = "SELECT * FROM words WHERE switch = " + ram + ";";
+        c_Ramdom = db.rawQuery(sql_ram, new String[]{});
+        //設定しているユーザー名を取得する。
+        String sql_User_Name = "SELECT * FROM user ;";
+        c_User_Name = db.rawQuery(sql_User_Name, new String[]{});
+        boolean mov_Ram = c_Ramdom.moveToFirst();
+        boolean mov_User = c_User_Name.moveToFirst();
+
+        String str = c_Ramdom.getString(2);
+        String regex = "name";
+
+        Pattern p = Pattern.compile(regex);
+
+        Matcher m = p.matcher(str);
+
+        String result = m.replaceAll(c_User_Name.getString(1));
+        words_textView.setText(result);
+        c_User_Name.close();
+
+
+
+
         //TODO:12/12
         //生成したボタンの動き（遷移）
         //画像の入れ替え
@@ -471,14 +497,16 @@ public class MainActivity extends AppCompatActivity
 
     //進捗を変更した場合の処理の理想
     protected void onActivityResult(int requestCode , int RESULT_OK , Intent dbIntent_update){
-        TextView words_textView =findViewById(R.id.words_textView);
-        //SQLite
-        OpenHelper helper = new OpenHelper(this);
-        final SQLiteDatabase db = helper.getWritableDatabase();
+        if(RESULT_OK!=0) {
+            TextView words_textView = findViewById(R.id.words_textView);
+            //SQLite
+            OpenHelper helper = new OpenHelper(this);
+            final SQLiteDatabase db = helper.getWritableDatabase();
 
-        super.onActivityResult(requestCode,RESULT_OK,dbIntent_update);
-       Intent intent = getIntent();
-       int seekInt = intent.getIntExtra("seekInt",0);
+            super.onActivityResult(requestCode, RESULT_OK, dbIntent_update);
+            Log.d("RESULT", "変数 RESULT_OK は「" + RESULT_OK + "」");
+            //Intent intent = getIntent();
+            int seekInt = dbIntent_update.getIntExtra("seekInt", 0);
             //seekintを変換
             switch (seekInt) {
                 case 0:
@@ -535,7 +563,7 @@ public class MainActivity extends AppCompatActivity
             words_textView.setText(result);
             //words_textView.setText(String.format("%s", c5.getString(2)));
             c_User_Name.close();
-
+        }
 
         }
 
