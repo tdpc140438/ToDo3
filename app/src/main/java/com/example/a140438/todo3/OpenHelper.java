@@ -16,7 +16,10 @@ public class OpenHelper extends SQLiteOpenHelper{
         //super(context, "TODO_DB", null, 2);
 
         //version3：pastテーブルの追加
-        super(context, "TODO_DB", null, 3);
+        //super(context, "TODO_DB", null, 3);
+
+        //version4 : picture テーブルの変更
+        super(context, "TODO_DB", null, 4);
     }
 
     @Override
@@ -193,5 +196,11 @@ public class OpenHelper extends SQLiteOpenHelper{
                     " TorF INTEGER)");
 		}
 
+		if(oldVersion == 3){
+            db.execSQL("DROP TABLE picture");
+            db.execSQL("CREATE TABLE picture(" +
+                    " picture_id INTEGER PRIMARY KEY AUTOINCREMENT," +
+                    " picture_url TEXT)");
+        }
     }
 }
