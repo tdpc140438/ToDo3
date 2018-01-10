@@ -495,7 +495,7 @@ public class MainActivity extends AppCompatActivity
         return df.format(date);
     }
 
-    //進捗を変更した場合の処理の理想
+    //進捗を変更した場合の処理
     protected void onActivityResult(int requestCode , int RESULT_OK , Intent dbIntent_update){
         if(RESULT_OK!=0) {
             TextView words_textView = findViewById(R.id.words_textView);

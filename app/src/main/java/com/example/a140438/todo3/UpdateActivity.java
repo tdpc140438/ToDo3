@@ -1,8 +1,10 @@
 package com.example.a140438.todo3;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -151,14 +153,26 @@ public class UpdateActivity extends AppCompatActivity {
         delete_Button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent dbIntent_delete = new Intent(UpdateActivity.this,
-                        MainActivity.class);
+                new AlertDialog.Builder(UpdateActivity.this)
+                        .setTitle("目標削除確認")
+                        .setMessage("目標を削除します。よろしいですか？")
+                        .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                // OKをタップしたときの処理
+
+                                Intent dbIntent_delete = new Intent(UpdateActivity.this, MainActivity.class);
 
                 String delete_sql = "DELETE FROM goal WHERE goal_id = " + goal_id + ";";
 
                 db.execSQL(delete_sql);
 
                 startActivity(dbIntent_delete);
+                            }
+                        })
+                        .setNegativeButton("Cancel", null)
+                        .show();
+
             }
         });
 
@@ -168,22 +182,22 @@ public class UpdateActivity extends AppCompatActivity {
         add_Button20.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent dbIntent_update = new Intent(UpdateActivity.this,
-                        MainActivity.class);
+                                Intent dbIntent_update = new Intent(UpdateActivity.this,
+                                        MainActivity.class);
 
-                String update_sql = "UPDATE goal SET goal_name = '" + edit_goal.getText().toString() + "'," +
-                             " memo = '" + edit_memo.getText().toString() + "', progress = " + seekInt + "," +
-                             " year = " + Year_Picker.getValue() + ", month = " + Month_Picker.getValue() + "," +
-                             " day = " + Day_Picker.getValue() + ", hour = " + Hour_Picker.getValue() + "," +
-                             " minutes = " + Minutes_Picker.getValue() + ", category = " + goal_category + "" +
-                             " WHERE goal_id = " + goal_id + ";";
+                                String update_sql = "UPDATE goal SET goal_name = '" + edit_goal.getText().toString() + "'," +
+                                        " memo = '" + edit_memo.getText().toString() + "', progress = " + seekInt + "," +
+                                        " year = " + Year_Picker.getValue() + ", month = " + Month_Picker.getValue() + "," +
+                                        " day = " + Day_Picker.getValue() + ", hour = " + Hour_Picker.getValue() + "," +
+                                        " minutes = " + Minutes_Picker.getValue() + ", category = " + goal_category + "" +
+                                        " WHERE goal_id = " + goal_id + ";";
 
-                db.execSQL(update_sql);
-                dbIntent_update.putExtra("seekInt", seekInt);
-                setResult(RESULT_OK,dbIntent_update);
-                //startActivity(dbIntent_update);
-                finish();
-            }
-        });
-    }
+                                db.execSQL(update_sql);
+                                dbIntent_update.putExtra("seekInt", seekInt);
+                                setResult(RESULT_OK,dbIntent_update);
+                                //startActivity(dbIntent_update);
+                                finish();
+             }
+          });
+     }
 }
