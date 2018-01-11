@@ -22,7 +22,9 @@ public class OpenHelper extends SQLiteOpenHelper{
         //super(context, "TODO_DB", null, 4);
 
         //version5 : 台詞パックの追加
-         super(context, "TODO_DB", null, 5);
+        //super(context, "TODO_DB", null, 5);
+
+        super(context, "TODO_DB", null, 6);
     }
 
     @Override
@@ -232,6 +234,10 @@ public class OpenHelper extends SQLiteOpenHelper{
         db.execSQL("INSERT INTO words(words_id, package_id, words_text, switch)" +
                 "VALUES('maid_NORM_C', 'Maid', 'name、今日も目標に向けて頑張りましょう。', 28)");
 
+        //ver6
+        db.execSQL("INSERT INTO picture(picture_url)" +
+                "VALUES('aaa')");
+
     }
 
     @Override
@@ -338,5 +344,9 @@ public class OpenHelper extends SQLiteOpenHelper{
                     "VALUES('maid_NORM_C', 'Maid', 'name、今日も目標に向けて頑張りましょう。', 28)");
         }
 
+        if(oldVersion <= 5){
+            db.execSQL("INSERT INTO picture(picture_url)" +
+                    "VALUES('aaa')");
+        }
     }
 }
