@@ -26,12 +26,16 @@ public class Debug extends Activity {
 
         Cursor c = null;
         Cursor c2 = null;
+        Cursor c3 = null;
 
         String sql = "SELECT * FROM goal;";
         c = db.rawQuery(sql, new String[]{});
 
         String sql2 = "SELECT * FROM user;";
         c2 = db.rawQuery(sql2, new String[]{});
+
+        String sql3 = "SELECT * FROM package;";
+        c3 = db.rawQuery(sql3, new String[]{});
 
         boolean mov = c.moveToFirst();
 
@@ -54,8 +58,19 @@ public class Debug extends Activity {
             layout.addView(tv2);
         }
 
+        boolean mov3 = c3.moveToFirst();
+
+        while(mov3){
+            TextView tv3 = new TextView(this);
+            tv3.setText(String.format("%s, %s, %d",
+                    c3.getString(0), c3.getString(1), c3.getInt(2)));
+            mov3 = c3.moveToNext();
+            layout.addView(tv3);
+        }
+
         c.close();
         c2.close();
+        c3.close();
         db.close();
     }
 }

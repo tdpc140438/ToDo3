@@ -19,7 +19,10 @@ public class OpenHelper extends SQLiteOpenHelper{
         //super(context, "TODO_DB", null, 3);
 
         //version4 : picture テーブルの変更
-        super(context, "TODO_DB", null, 4);
+        //super(context, "TODO_DB", null, 4);
+
+        //version5 : 台詞パックの追加
+         super(context, "TODO_DB", null, 5);
     }
 
     @Override
@@ -133,11 +136,6 @@ public class OpenHelper extends SQLiteOpenHelper{
         db.execSQL("INSERT INTO words(words_id, package_id, words_text, switch)" +
                 "VALUES('tsun_NORM_C', 'Tsundere', 'えっ！？ …別に、nameがいなかったからって退屈なんてしてないわよ！', 28)");
 
-
-
-
-
-
         //仮ユーザー入力(ユーザー登録機能作成時に消去すること)
         db.execSQL("INSERT INTO user(user_name, user_level, exp) VALUES('テスター', 1, 0)");
 
@@ -165,6 +163,75 @@ public class OpenHelper extends SQLiteOpenHelper{
                 " month INTEGER," +
                 " day INTEGER," +
                 " TorF INTEGER)");
+
+        //ver4
+        db.execSQL("DROP TABLE picture");
+        db.execSQL("CREATE TABLE picture(" +
+                " picture_id INTEGER PRIMARY KEY AUTOINCREMENT," +
+                " picture_url TEXT)");
+
+        //ver5
+        db.execSQL("INSERT INTO package(package_id, package_name, unlock)" +
+                "VALUES('Maid', 'メイド', 1)");
+
+        db.execSQL("INSERT INTO words(words_id,package_id,words_text,switch) " +
+                "VALUES('maid_CHAR_A','Maid','name、何かご用でしょうか？',1)");
+        db.execSQL("INSERT INTO words(words_id,package_id,words_text,switch) " +
+                "VALUES('maid_CHAR_B','Maid','name、私に何なりとお申し付けくださいませ。',2)");
+        db.execSQL("INSERT INTO words(words_id,package_id,words_text,switch) " +
+                "VALUES('maid_CHAR_C','Maid','name、お戯れも程々になさいませ。',3)");
+        db.execSQL("INSERT INTO words(words_id,package_id,words_text,switch) " +
+                "VALUES('PER0','Maid','目標達成までnameをサポート致します。これから頑張りましょう。',4)");
+        db.execSQL("INSERT INTO words(words_id,package_id,words_text,switch) " +
+                "VALUES('PER10','Maid','進捗率が10％になりました。name、まだこれからですね。',5)");
+        db.execSQL("INSERT INTO words(words_id,package_id,words_text,switch) " +
+                "VALUES('PER20','Maid','進捗率が20％になりました。まだまだ余裕そうですね。',6)");
+        db.execSQL("INSERT INTO words(words_id,package_id,words_text,switch) " +
+                "VALUES('PER30','Maid','進捗率が30％になりました。name、その調子いきましょう。',7)");
+        db.execSQL("INSERT INTO words(words_id,package_id,words_text,switch) " +
+                "VALUES('PER40','Maid','進捗率が40％になりました。気を引き締めていきましょう。',8)");
+        db.execSQL("INSERT INTO words(words_id,package_id,words_text,switch) " +
+                "VALUES('PER50','Maid','進捗率が50％になりました。目標達成まであと半分です。',9)");
+        db.execSQL("INSERT INTO words(words_id,package_id,words_text,switch) " +
+                "VALUES('PER60','Maid','進捗率が60％になりました。集中していきましょう。',10)");
+        db.execSQL("INSERT INTO words(words_id,package_id,words_text,switch) " +
+                "VALUES('PER70','Maid','進捗率が70％になりました。name、無理は禁物です。',11)");
+        db.execSQL("INSERT INTO words(words_id,package_id,words_text,switch) " +
+                "VALUES('PER80','Maid','進捗率が80％になりました。体調に気を付けてください。',12)");
+        db.execSQL("INSERT INTO words(words_id,package_id,words_text,switch) " +
+                "VALUES('PER90','Maid','進捗率が90％になりました。目標達成までもう少しです。',13)");
+
+        db.execSQL("INSERT INTO words(words_id, package_id, words_text, switch)" +
+                "VALUES('maid_PER0_GOAL', 'Maid', 'name、目標達成までこれから頑張りましょう。', 14)");
+        db.execSQL("INSERT INTO words(words_id, package_id, words_text, switch)" +
+                "VALUES('maid_PER10_GOAL', 'Maid', '進捗率は10％です。name、計画は立てていますか？早速取り掛かりましょう。', 15)");
+        db.execSQL("INSERT INTO words(words_id, package_id, words_text, switch)" +
+                "VALUES('maid_PER20_GOAL', 'Maid', '進捗率は20％です。目標達成に向けて少しずつでも努力することが大切です。', 16)");
+        db.execSQL("INSERT INTO words(words_id, package_id, words_text, switch)" +
+                "VALUES('maid_PER30_GOAL', 'Maid', '進捗率は30％です。name、順調に進んでいるでしょうか？', 17)");
+        db.execSQL("INSERT INTO words(words_id, package_id, words_text, switch)" +
+                "VALUES('maid_PER40_GOAL', 'Maid', '進捗率は40％です。計画通りに進んでいるのでしたら、すこし休憩しましょう。', 18)");
+        db.execSQL("INSERT INTO words(words_id, package_id, words_text, switch)" +
+                "VALUES('maid_PER50_GOAL', 'Maid', '進捗率は50％です。ようやく半分ですね、お疲れ様ですname。', 19)");
+        db.execSQL("INSERT INTO words(words_id, package_id, words_text, switch)" +
+                "VALUES('maid_PER60_GOAL', 'Maid', '進捗率は60％です。体調を崩さないよう、気を付けて頑張りましょう。', 20)");
+        db.execSQL("INSERT INTO words(words_id, package_id, words_text, switch)" +
+                "VALUES('maid_PER70_GOAL', 'Maid', '進捗率は70％です。name、最近疲れがたまってはいませんか？時には休息も必要ですよ。', 21)");
+        db.execSQL("INSERT INTO words(words_id, package_id, words_text, switch)" +
+                "VALUES('maid_PER80_GOAL', 'Maid', '進捗率は80％です。もう少しで目標達成ですね。 name、焦らずにいきましょう。', 22)");
+        db.execSQL("INSERT INTO words(words_id, package_id, words_text, switch)" +
+                "VALUES('maid_PER90_GOAL', 'Maid', '進捗率は90％です。目標達成まであと少しです。 name、早く終わらせてしまいましょう。', 23)");
+        db.execSQL("INSERT INTO words(words_id, package_id, words_text, switch)" +
+                "VALUES('maid_SUCC', 'Maid', '目標達成おめでとうございます。nameなら出来ると信じておりました。', 24)");
+        db.execSQL("INSERT INTO words(words_id, package_id, words_text, switch)" +
+                "VALUES('maid_FAIL', 'Maid', '時にはこのような事もあります。 次は頑張りましょう。', 25)");
+        db.execSQL("INSERT INTO words(words_id, package_id, words_text, switch)" +
+                "VALUES('maid_NORM_A', 'Maid', 'お待ちしておりましたname。', 26)");
+        db.execSQL("INSERT INTO words(words_id, package_id, words_text, switch)" +
+                "VALUES('maid_NORM_B', 'Maid', 'お帰りなさいませname。', 27)");
+        db.execSQL("INSERT INTO words(words_id, package_id, words_text, switch)" +
+                "VALUES('maid_NORM_C', 'Maid', 'name、今日も目標に向けて頑張りましょう。', 28)");
+
     }
 
     @Override
@@ -174,7 +241,7 @@ public class OpenHelper extends SQLiteOpenHelper{
         //version2でのアップグレード内容
         //version1→version2の時のみ起動する
 
-		if(oldVersion == 1){
+		if(oldVersion <= 1){
 			//詳しい変更内容
             db.execSQL("DROP TABLE user;");
             db.execSQL("CREATE TABLE user(" +
@@ -190,7 +257,7 @@ public class OpenHelper extends SQLiteOpenHelper{
         //version3でのアップグレード内容
         //version2→version3の時のみ起動する
 
-		if(oldVersion == 2){
+		if(oldVersion <= 2){
 			//詳しい変更内容
             db.execSQL("CREATE TABLE past(" +
                     " past_id INTEGER PRIMARY KEY AUTOINCREMENT," +
@@ -201,11 +268,75 @@ public class OpenHelper extends SQLiteOpenHelper{
                     " TorF INTEGER)");
 		}
 
-		if(oldVersion == 3){
+		if(oldVersion <= 3){
             db.execSQL("DROP TABLE picture");
             db.execSQL("CREATE TABLE picture(" +
                     " picture_id INTEGER PRIMARY KEY AUTOINCREMENT," +
                     " picture_url TEXT)");
         }
+
+        if(oldVersion <= 4) {
+            db.execSQL("INSERT INTO package(package_id, package_name, unlock)" +
+                    "VALUES('Maid', 'メイド', 1)");
+
+            db.execSQL("INSERT INTO words(words_id,package_id,words_text,switch) " +
+                    "VALUES('maid_CHAR_A','Maid','name、何かご用でしょうか？',1)");
+            db.execSQL("INSERT INTO words(words_id,package_id,words_text,switch) " +
+                    "VALUES('maid_CHAR_B','Maid','name、私に何なりとお申し付けくださいませ。',2)");
+            db.execSQL("INSERT INTO words(words_id,package_id,words_text,switch) " +
+                    "VALUES('maid_CHAR_C','Maid','name、お戯れも程々になさいませ。',3)");
+            db.execSQL("INSERT INTO words(words_id,package_id,words_text,switch) " +
+                    "VALUES('PER0','Maid','目標達成までnameをサポート致します。これから頑張りましょう。',4)");
+            db.execSQL("INSERT INTO words(words_id,package_id,words_text,switch) " +
+                    "VALUES('PER10','Maid','進捗率が10％になりました。name、まだこれからですね。',5)");
+            db.execSQL("INSERT INTO words(words_id,package_id,words_text,switch) " +
+                    "VALUES('PER20','Maid','進捗率が20％になりました。まだまだ余裕そうですね。',6)");
+            db.execSQL("INSERT INTO words(words_id,package_id,words_text,switch) " +
+                    "VALUES('PER30','Maid','進捗率が30％になりました。name、その調子いきましょう。',7)");
+            db.execSQL("INSERT INTO words(words_id,package_id,words_text,switch) " +
+                    "VALUES('PER40','Maid','進捗率が40％になりました。気を引き締めていきましょう。',8)");
+            db.execSQL("INSERT INTO words(words_id,package_id,words_text,switch) " +
+                    "VALUES('PER50','Maid','進捗率が50％になりました。目標達成まであと半分です。',9)");
+            db.execSQL("INSERT INTO words(words_id,package_id,words_text,switch) " +
+                    "VALUES('PER60','Maid','進捗率が60％になりました。集中していきましょう。',10)");
+            db.execSQL("INSERT INTO words(words_id,package_id,words_text,switch) " +
+                    "VALUES('PER70','Maid','進捗率が70％になりました。name、無理は禁物です。',11)");
+            db.execSQL("INSERT INTO words(words_id,package_id,words_text,switch) " +
+                    "VALUES('PER80','Maid','進捗率が80％になりました。体調に気を付けてください。',12)");
+            db.execSQL("INSERT INTO words(words_id,package_id,words_text,switch) " +
+                    "VALUES('PER90','Maid','進捗率が90％になりました。目標達成までもう少しです。',13)");
+
+            db.execSQL("INSERT INTO words(words_id, package_id, words_text, switch)" +
+                    "VALUES('maid_PER0_GOAL', 'Maid', 'name、目標達成までこれから頑張りましょう。', 14)");
+            db.execSQL("INSERT INTO words(words_id, package_id, words_text, switch)" +
+                    "VALUES('maid_PER10_GOAL', 'Maid', '進捗率は10％です。name、計画は立てていますか？早速取り掛かりましょう。', 15)");
+            db.execSQL("INSERT INTO words(words_id, package_id, words_text, switch)" +
+                    "VALUES('maid_PER20_GOAL', 'Maid', '進捗率は20％です。目標達成に向けて少しずつでも努力することが大切です。', 16)");
+            db.execSQL("INSERT INTO words(words_id, package_id, words_text, switch)" +
+                    "VALUES('maid_PER30_GOAL', 'Maid', '進捗率は30％です。name、順調に進んでいるでしょうか？', 17)");
+            db.execSQL("INSERT INTO words(words_id, package_id, words_text, switch)" +
+                    "VALUES('maid_PER40_GOAL', 'Maid', '進捗率は40％です。計画通りに進んでいるのでしたら、すこし休憩しましょう。', 18)");
+            db.execSQL("INSERT INTO words(words_id, package_id, words_text, switch)" +
+                    "VALUES('maid_PER50_GOAL', 'Maid', '進捗率は50％です。ようやく半分ですね、お疲れ様ですname。', 19)");
+            db.execSQL("INSERT INTO words(words_id, package_id, words_text, switch)" +
+                    "VALUES('maid_PER60_GOAL', 'Maid', '進捗率は60％です。体調を崩さないよう、気を付けて頑張りましょう。', 20)");
+            db.execSQL("INSERT INTO words(words_id, package_id, words_text, switch)" +
+                    "VALUES('maid_PER70_GOAL', 'Maid', '進捗率は70％です。name、最近疲れがたまってはいませんか？時には休息も必要ですよ。', 21)");
+            db.execSQL("INSERT INTO words(words_id, package_id, words_text, switch)" +
+                            "VALUES('maid_PER80_GOAL', 'Maid', '進捗率は80％です。もう少しで目標達成ですね。 name、焦らずにいきましょう。', 22)");
+            db.execSQL("INSERT INTO words(words_id, package_id, words_text, switch)" +
+                            "VALUES('maid_PER90_GOAL', 'Maid', '進捗率は90％です。目標達成まであと少しです。 name、早く終わらせてしまいましょう。', 23)");
+            db.execSQL("INSERT INTO words(words_id, package_id, words_text, switch)" +
+                    "VALUES('maid_SUCC', 'Maid', '目標達成おめでとうございます。nameなら出来ると信じておりました。', 24)");
+            db.execSQL("INSERT INTO words(words_id, package_id, words_text, switch)" +
+                            "VALUES('maid_FAIL', 'Maid', '時にはこのような事もあります。 次は頑張りましょう。', 25)");
+            db.execSQL("INSERT INTO words(words_id, package_id, words_text, switch)" +
+                    "VALUES('maid_NORM_A', 'Maid', 'お待ちしておりましたname。', 26)");
+            db.execSQL("INSERT INTO words(words_id, package_id, words_text, switch)" +
+                    "VALUES('maid_NORM_B', 'Maid', 'お帰りなさいませname。', 27)");
+            db.execSQL("INSERT INTO words(words_id, package_id, words_text, switch)" +
+                    "VALUES('maid_NORM_C', 'Maid', 'name、今日も目標に向けて頑張りましょう。', 28)");
+        }
+
     }
 }
