@@ -222,6 +222,12 @@ public class MainActivity extends AppCompatActivity
              g_View[i].setOnClickListener(new View.OnClickListener() {
                      @Override
                      public void onClick(View v) {
+
+                         //言語パック情報を受け取る
+                         Intent intent_words = getIntent();
+                         String use_package_id = intent_words.getStringExtra("use_package_id");
+                         Log.d("use_package_id","変数 use_package_id は「" + use_package_id + "」");
+
                          TextView words_textView =findViewById(R.id.words_textView);
                          //Tagでidを取得する
                      //1.idから進捗率を取得する。
@@ -269,11 +275,10 @@ public class MainActivity extends AppCompatActivity
                              progres_key=23;
                              break;
                      }
-
                      Cursor c5 = null;
                      Cursor c_User_Name = null;
                      //進捗率に応じてテキストを取得する。
-                     String sql5 = "SELECT * FROM words WHERE switch = " + progres_key + ";";
+                     String sql5 = "SELECT * FROM words WHERE switch = " + progres_key + " AND package_id = '" + use_package_id + "';";
                      c5 = db.rawQuery(sql5, new String[]{});
                     //設定しているユーザー名を取得する。
                      String sql_User_Name = "SELECT * FROM user ;";
@@ -361,7 +366,6 @@ public class MainActivity extends AppCompatActivity
          }
         }
         c3.close();
-
 
         //起動後のテキスト表示 1/9 プロト完成
 
@@ -567,6 +571,9 @@ public class MainActivity extends AppCompatActivity
 
         }
 
+            public void  call_words(int seekint){
+
+            }
 
     }
 

@@ -5,6 +5,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -101,7 +102,6 @@ public class UserActivity extends AppCompatActivity {
                 //idで受け渡し
                 dbIntent.putExtra("user_name", user_name_edit.getText().toString());
                 dbIntent.putExtra("use_package_id", c3.getString(0));
-
                 startActivity(dbIntent);
             }
         });
