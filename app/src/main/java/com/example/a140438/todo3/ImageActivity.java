@@ -2,21 +2,25 @@ package com.example.a140438.todo3;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.ParcelFileDescriptor;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
-import java.io.IOException;
+import java.io.FileDescriptor;
 
 public class ImageActivity extends AppCompatActivity {
-    private static final int RESULT_PICK_IMAGEFILE = 1001;
+    private static final int RESULT_PICK_IMAGEFILE = 2001;
     private TextView textView5 = (TextView)findViewById(R.id.textView5);
+    private ImageView selectImage = (ImageView)findViewById(R.id.selectImage);
+    private Button imageSetEnd = (Button)findViewById(R.id.imageSetEnd);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +45,16 @@ public class ImageActivity extends AppCompatActivity {
                 startActivityForResult(intent, RESULT_PICK_IMAGEFILE);
             }
         });
+
+        imageSetEnd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent dbIntent = new Intent(ImageActivity.this,
+                        MainActivity.class);
+
+                startActivity(dbIntent);
+            }
+        });
     }
 
     @Override
@@ -54,12 +68,20 @@ public class ImageActivity extends AppCompatActivity {
 
                     textView5.setText(String.format("Uri: %s", uri.toString()));
 
-                    OpenHelper helper = new OpenHelper(this);
-                    final SQLiteDatabase db = helper.getWritableDatabase();
+                    pfDescriptor = getContentResolver().openFileDescriptor(uri, "r");
 
-                    Cursor c = null;
+                    if(pfDescriptor != null){
+                        FileDescriptor fileDescriptor = pfDescriptor.getFileDescriptor();
+                        Bitmap bmp = BitmapFactory.decodeFileDescriptor(fileDescriptor);
+                        pfDescriptor.close();
+                        selectImage.setImageBitmap(bmp);
 
-                    String update_picture = "UPDATE picture SET picture_url = '" + uri.toString() + "'";
+                        OpenHelper helper = new OpenHelper(this);
+                        final SQLiteDatabase db = helper.getWritableDatabase();
+                        String update_picture = "UPDATE picture SET picture_url = '" + uri.toString() + "' WHERE picture_id = 1";
+                        db.execSQL(update_picture);
+                        db.close();
+                    }
                 }
                 catch(Exception e){
                     e.printStackTrace();
