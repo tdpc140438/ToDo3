@@ -108,7 +108,9 @@ public class UpdateActivity extends AppCompatActivity {
 
         //値の格納
         textView100.setText(seekBar.getProgress() * 10 + " %");
+        seekInt = seekBar.getProgress() * 10;
         seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+
             @Override
             public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
                 textView100.setText(seekBar.getProgress() * 10 + " %");
@@ -193,10 +195,17 @@ public class UpdateActivity extends AppCompatActivity {
                                         " WHERE goal_id = " + goal_id + ";";
 
                                 db.execSQL(update_sql);
-                                dbIntent_update.putExtra("seekInt", seekInt);
-                                setResult(RESULT_OK,dbIntent_update);
-                                //startActivity(dbIntent_update);
-                                finish();
+                                if(seekInt!=100) {
+                                    dbIntent_update.putExtra("seekInt", seekInt);
+                                    setResult(RESULT_OK, dbIntent_update);
+                                    //startActivity(dbIntent_update);
+                                    finish();
+                                }
+
+                                else{
+                                    Intent success = new Intent(UpdateActivity.this,SuccessActivity.class);
+                                    startActivity(success);
+                                }
              }
           });
      }
