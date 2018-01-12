@@ -49,6 +49,7 @@ public class MainActivity extends AppCompatActivity
     private LinearLayout linearLayout [] = new LinearLayout[50];
     private  int progres_key = 0 ;
     private int ram;
+    private  String package_def;
 
     @SuppressLint("ResourceType")
     @Override
@@ -100,25 +101,8 @@ public class MainActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
 
 
-
         //下に書くようにする。
-        //setContentView(R.layout.activity_main);
-        //ScrollViewにテキストの生成、テキストとボタン
-
-
-        //setContentViewは一つのみ
-// TODO:scrollView一時退避
-//        ScrollView scrollView = new ScrollView(this);
-//        setContentView(scrollView);
-
-
-        // リラティブレイアウトの設定//
-// TODO:relactive一時退避
-//        RelativeLayout relative = new RelativeLayout(this);
-//        relative.setLayoutParams(new RelativeLayout.LayoutParams(
-//                RelativeLayout.LayoutParams.MATCH_PARENT,
-//                RelativeLayout.LayoutParams.MATCH_PARENT));
-
+        //最初に設定されている言語パックの設定
         //縦レイアウト
         LinearLayout layout = (LinearLayout) findViewById(R.id.length_layout);
 
@@ -162,7 +146,15 @@ public class MainActivity extends AppCompatActivity
         c3 = db.rawQuery(sql3, new String[]{});
         boolean mov3 = c3.moveToFirst();
 
-
+        //言語パック初期設定
+            Cursor c_pack = null;
+            Cursor c_user = null;
+            //select
+            String sql_pack = "SELECT * FROM package WHERE package_name IN (SELECT use_package FROM user);";
+            c_pack = db.rawQuery(sql_pack, new String[]{});
+            boolean mov_pack = c_pack.moveToFirst();
+            package_def =c_pack.getString(0);
+            Log.d("def","変数 package_def は「" + package_def + "」");
 
 
         //動的ボタン生成部分
@@ -223,10 +215,9 @@ public class MainActivity extends AppCompatActivity
                      @Override
                      public void onClick(View v) {
 
-                         //言語パック情報を受け取る
-                         Intent intent_words = getIntent();
-                         String use_package_id = intent_words.getStringExtra("use_package_id");
-                         Log.d("use_package_id","変数 use_package_id は「" + use_package_id + "」");
+//                         Intent intent_words = getIntent();
+//                         String use_package_id = intent_words.getStringExtra("use_package_id");
+//                         Log.d("use_package_id","変数 use_package_id は「" + use_package_id + "」");
 
                          TextView words_textView =findViewById(R.id.words_textView);
                          //Tagでidを取得する
@@ -278,7 +269,7 @@ public class MainActivity extends AppCompatActivity
                      Cursor c5 = null;
                      Cursor c_User_Name = null;
                      //進捗率に応じてテキストを取得する。
-                     String sql5 = "SELECT * FROM words WHERE switch = " + progres_key + " AND package_id = '" + use_package_id + "';";
+                     String sql5 = "SELECT * FROM words WHERE switch = " + progres_key + " AND package_id = '" + package_def + "';";
                      c5 = db.rawQuery(sql5, new String[]{});
                     //設定しているユーザー名を取得する。
                      String sql_User_Name = "SELECT * FROM user ;";
@@ -299,48 +290,20 @@ public class MainActivity extends AppCompatActivity
                      c_User_Name.close();
                  }
              });
+
              //進捗率を変更した際の台詞
              Intent intent = getIntent();
              int seekInt = intent.getIntExtra("seekInt",0);
-             //seekintを変換
-             switch (seekInt) {
-                 case 0:
-                     seekInt = 4;
-                     break;
-                 case 10:
-                     seekInt = 5;
-                     break;
-                 case 20:
-                     seekInt = 6;
-                     break;
-                 case 30:
-                     seekInt = 7;
-                     break;
-                 case 40:
-                     seekInt = 8;
-                     break;
-                 case 50:
-                     seekInt = 9;
-                     break;
-                 case 60:
-                     seekInt = 10;
-                     break;
-                 case 70:
-                     seekInt = 11;
-                     break;
-                 case 80:
-                     seekInt = 12;
-                     break;
-                 case 90:
-                     seekInt = 13;
-                     break;
-             }
 
+             //seekintを変換
+             seekInt = words_select(seekInt);
              Cursor c_progres = null;
              Cursor c_User_Name = null;
+
              //進捗率に応じてテキストを取得する。
              String sql_progres = "SELECT * FROM words WHERE switch = " + seekInt + ";";
              c_progres = db.rawQuery(sql_progres, new String[]{});
+
              //設定しているユーザー名を取得する。
              String sql_User_Name = "SELECT * FROM user ;";
              c_User_Name = db.rawQuery(sql_User_Name, new String[]{});
@@ -358,8 +321,6 @@ public class MainActivity extends AppCompatActivity
              words_textView.setText(result);
              //words_textView.setText(String.format("%s", c5.getString(2)));
              c_User_Name.close();
-
-
          }
          else {
             break;
@@ -368,33 +329,30 @@ public class MainActivity extends AppCompatActivity
         c3.close();
 
         //起動後のテキスト表示 1/9 プロト完成
-
         TextView words_textView =findViewById(R.id.words_textView);
         ram=(int)(Math.random()*3)+26;
+
         //乱数生成確認
         Log.d("Ram","変数 ram は「" + ram + "」");
         Cursor c_Ramdom = null;
         Cursor c_User_Name = null;
+
         //乱数に応じてテキストを取得する。
-        String sql_ram = "SELECT * FROM words WHERE switch = " + ram + ";";
+        String sql_ram = "SELECT * FROM words WHERE switch = " + ram + " AND package_id = '" + package_def + "';";
         c_Ramdom = db.rawQuery(sql_ram, new String[]{});
+
         //設定しているユーザー名を取得する。
         String sql_User_Name = "SELECT * FROM user ;";
         c_User_Name = db.rawQuery(sql_User_Name, new String[]{});
         boolean mov_Ram = c_Ramdom.moveToFirst();
         boolean mov_User = c_User_Name.moveToFirst();
-
         String str = c_Ramdom.getString(2);
         String regex = "name";
-
         Pattern p = Pattern.compile(regex);
-
         Matcher m = p.matcher(str);
-
         String result = m.replaceAll(c_User_Name.getString(1));
         words_textView.setText(result);
         c_User_Name.close();
-
 
 
 
@@ -511,44 +469,14 @@ public class MainActivity extends AppCompatActivity
             Log.d("RESULT", "変数 RESULT_OK は「" + RESULT_OK + "」");
             //Intent intent = getIntent();
             int seekInt = dbIntent_update.getIntExtra("seekInt", 0);
-            //seekintを変換
-            switch (seekInt) {
-                case 0:
-                    seekInt = 4;
-                    break;
-                case 10:
-                    seekInt = 5;
-                    break;
-                case 20:
-                    seekInt = 6;
-                    break;
-                case 30:
-                    seekInt = 7;
-                    break;
-                case 40:
-                    seekInt = 8;
-                    break;
-                case 50:
-                    seekInt = 9;
-                    break;
-                case 60:
-                    seekInt = 10;
-                    break;
-                case 70:
-                    seekInt = 11;
-                    break;
-                case 80:
-                    seekInt = 12;
-                    break;
-                case 90:
-                    seekInt = 13;
-                    break;
-            }
+            //seekintをcase文で変換(下に記述)
+
+            seekInt = words_select(seekInt);
 
             Cursor c_progres = null;
             Cursor c_User_Name = null;
             //進捗率に応じてテキストを取得する。
-            String sql_progres = "SELECT * FROM words WHERE switch = " + seekInt + ";";
+            String sql_progres = "SELECT * FROM words WHERE switch = " + seekInt + " AND package_id = '" + package_def + "';";
             c_progres = db.rawQuery(sql_progres, new String[]{});
             //設定しているユーザー名を取得する。
             String sql_User_Name = "SELECT * FROM user ;";
@@ -570,10 +498,39 @@ public class MainActivity extends AppCompatActivity
         }
 
         }
-
-            public void  call_words(int seekint){
-
+            public int words_select(int reInt){
+                switch (reInt) {
+                    case 0:
+                        reInt = 4;
+                        break;
+                    case 10:
+                        reInt = 5;
+                        break;
+                    case 20:
+                        reInt = 6;
+                        break;
+                    case 30:
+                        reInt = 7;
+                        break;
+                    case 40:
+                        reInt = 8;
+                        break;
+                    case 50:
+                        reInt = 9;
+                        break;
+                    case 60:
+                        reInt = 10;
+                        break;
+                    case 70:
+                        reInt = 11;
+                        break;
+                    case 80:
+                        reInt = 12;
+                        break;
+                    case 90:
+                        reInt = 13;
+                        break;
+                }
+                return reInt;
             }
-
     }
-
