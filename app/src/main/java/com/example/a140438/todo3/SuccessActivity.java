@@ -61,10 +61,14 @@ public class SuccessActivity extends AppCompatActivity {
 
         String result = m.replaceAll(c_User_Name.getString(1));
 
+        c_User_Name.close();
+        
         TextView succ_mess = findViewById(R.id.succ_mess);
         succ_mess.setText(result);
 
-        c_User_Name.close();
+
+
+
     }
 };
 
