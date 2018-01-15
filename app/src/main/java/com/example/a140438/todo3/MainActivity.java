@@ -189,7 +189,6 @@ public class MainActivity extends AppCompatActivity
              linearLayout[i].addView(g_View[i]);
              layout.addView(linearLayout[i]);
 
-
              //横レイアウトにボタンを追加
              linearLayout[i].addView(button[i]);
              g_View[i].setLayoutParams(buttonLayoutParams);

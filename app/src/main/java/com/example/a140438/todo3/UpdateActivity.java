@@ -205,7 +205,8 @@ public class UpdateActivity extends AppCompatActivity {
 
                                 else{
                                     Intent success = new Intent(UpdateActivity.this,SuccessActivity.class);
-                                    success.putExtra("goal_name",edit_goal.getText());
+                                    success.putExtra("goal_name",edit_goal.getText().toString());
+                                    success.putExtra("goal_id",goal_id);
                                     startActivity(success);
                                 }
              }
