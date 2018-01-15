@@ -2,6 +2,7 @@ package com.example.a140438.todo3;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -14,7 +15,11 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.io.BufferedInputStream;
+import java.io.File;
 import java.io.FileDescriptor;
+import java.io.FileInputStream;
+import java.io.InputStream;
 
 public class ImageActivity extends AppCompatActivity {
     private static final int RESULT_PICK_IMAGEFILE = 2001;
@@ -32,6 +37,30 @@ public class ImageActivity extends AppCompatActivity {
         selectImage = (ImageView)findViewById(R.id.selectImage);
         imageButton = (Button)findViewById(R.id.imageButton);
         imageSetEnd = (Button)findViewById(R.id.imageSetEnd);
+
+        OpenHelper helper = new OpenHelper(this);
+        final SQLiteDatabase db_uriCheck = helper.getWritableDatabase();
+        Cursor c = null;
+        String sql = "SELECT picture_url FROM picture WHERE picture_id = 1;";
+        c = db_uriCheck.rawQuery(sql, new String[]{});
+        c.moveToFirst();
+
+        if(!c.getString(1).equals("aaa") && !c.getString(1).equals("")){
+            Uri picture_now = Uri.parse(c.getString(1));
+
+            File file = new File(picture_now.getPath());
+
+            try{
+                InputStream stream = new FileInputStream(file);
+                Bitmap bitmap = BitmapFactory.decodeStream(new BufferedInputStream(stream));
+                selectImage.setImageBitmap(bitmap);
+            }
+            catch(Exception e){
+                e.printStackTrace();
+            }
+        }
+
+        db_uriCheck.close();
 
         imageButton.setOnClickListener(new View.OnClickListener() {
             @Override
