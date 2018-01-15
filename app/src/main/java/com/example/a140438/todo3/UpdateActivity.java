@@ -195,6 +195,7 @@ public class UpdateActivity extends AppCompatActivity {
                                         " WHERE goal_id = " + goal_id + ";";
 
                                 db.execSQL(update_sql);
+                                //進捗率が100％のときに完了画面へ遷移する。
                                 if(seekInt!=100) {
                                     dbIntent_update.putExtra("seekInt", seekInt);
                                     setResult(RESULT_OK, dbIntent_update);
@@ -204,6 +205,8 @@ public class UpdateActivity extends AppCompatActivity {
 
                                 else{
                                     Intent success = new Intent(UpdateActivity.this,SuccessActivity.class);
+                                    success.putExtra("goal_name",edit_goal.getText().toString());
+                                    success.putExtra("goal_id",goal_id);
                                     startActivity(success);
                                 }
              }
