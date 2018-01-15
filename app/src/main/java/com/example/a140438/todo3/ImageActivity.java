@@ -18,16 +18,21 @@ import java.io.FileDescriptor;
 
 public class ImageActivity extends AppCompatActivity {
     private static final int RESULT_PICK_IMAGEFILE = 2001;
-    private TextView textView5 = (TextView)findViewById(R.id.textView5);
-    private ImageView selectImage = (ImageView)findViewById(R.id.selectImage);
-    private Button imageSetEnd = (Button)findViewById(R.id.imageSetEnd);
+    private TextView text_acImage;
+    private ImageView selectImage;
+    private Button imageButton;
+    private Button imageSetEnd;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_image);
 
-        Button imageButton = findViewById(R.id.imageButton);
+        text_acImage = (TextView)findViewById(R.id.text_acImage);
+        selectImage = (ImageView)findViewById(R.id.selectImage);
+        imageButton = (Button)findViewById(R.id.imageButton);
+        imageSetEnd = (Button)findViewById(R.id.imageSetEnd);
+
         imageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -66,7 +71,7 @@ public class ImageActivity extends AppCompatActivity {
                 try{
                     Uri uri = resultData.getData();
 
-                    textView5.setText(String.format("Uri: %s", uri.toString()));
+                    text_acImage.setText(String.format("Uri: %s", uri.toString()));
 
                     pfDescriptor = getContentResolver().openFileDescriptor(uri, "r");
 
