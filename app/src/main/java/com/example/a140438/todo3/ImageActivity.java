@@ -1,6 +1,7 @@
 package com.example.a140438.todo3;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -16,9 +17,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.io.BufferedInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileDescriptor;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.FilterInputStream;
 import java.io.InputStream;
 
 public class ImageActivity extends AppCompatActivity {
@@ -27,6 +32,7 @@ public class ImageActivity extends AppCompatActivity {
     private ImageView selectImage;
     private Button imageButton;
     private Button imageSetEnd;
+    private String fileName = "picture_now";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,7 +43,7 @@ public class ImageActivity extends AppCompatActivity {
         selectImage = (ImageView)findViewById(R.id.selectImage);
         imageButton = (Button)findViewById(R.id.imageButton);
         imageSetEnd = (Button)findViewById(R.id.imageSetEnd);
-
+/*
         OpenHelper helper = new OpenHelper(this);
         final SQLiteDatabase db_uriCheck = helper.getWritableDatabase();
         Cursor c = null;
@@ -45,23 +51,10 @@ public class ImageActivity extends AppCompatActivity {
         c = db_uriCheck.rawQuery(sql, new String[]{});
         c.moveToFirst();
 
-        if(!c.getString(1).equals("aaa") && !c.getString(1).equals("")){
-            Uri picture_now = Uri.parse(c.getString(1));
-
-            File file = new File(picture_now.getPath());
-
-            try{
-                InputStream stream = new FileInputStream(file);
-                Bitmap bitmap = BitmapFactory.decodeStream(new BufferedInputStream(stream));
-                selectImage.setImageBitmap(bitmap);
-            }
-            catch(Exception e){
-                e.printStackTrace();
-            }
-        }
+        Uri picture_now = Uri.parse(c.getString(1));
 
         db_uriCheck.close();
-
+*/
         imageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -106,9 +99,30 @@ public class ImageActivity extends AppCompatActivity {
 
                     if(pfDescriptor != null){
                         FileDescriptor fileDescriptor = pfDescriptor.getFileDescriptor();
+//                        FileInputStream picture_data = new FileInputStream(fileDescriptor);
+
                         Bitmap bmp = BitmapFactory.decodeFileDescriptor(fileDescriptor);
                         pfDescriptor.close();
-                        selectImage.setImageBitmap(bmp);
+                        //selectImage.setImageBitmap(bmp);
+
+                        //Bitmapをbyteに変換
+                        ByteArrayOutputStream bos = new ByteArrayOutputStream();
+                        bmp.compress(Bitmap.CompressFormat.JPEG, 100, bos);
+
+                        //内部ストレージにバイナリで保存
+                        try(FileOutputStream fileOutputStream = openFileOutput(fileName,
+                                Context.MODE_PRIVATE);){
+                            fileOutputStream.write(bos.toByteArray());
+                        }
+                        catch(Exception e){
+                            e.printStackTrace();
+                        }
+
+                        try(FileInputStream fileInputStream = openFileInput(fileName);){
+                            Bitmap bitmap = BitmapFactory.decodeStream(fileInputStream);
+                            selectImage.setImageBitmap(bitmap);
+                        }
+
 
                         OpenHelper helper = new OpenHelper(this);
                         final SQLiteDatabase db = helper.getWritableDatabase();
