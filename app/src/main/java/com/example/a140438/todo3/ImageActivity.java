@@ -41,7 +41,7 @@ public class ImageActivity extends AppCompatActivity {
         OpenHelper helper = new OpenHelper(this);
         final SQLiteDatabase db_uriCheck = helper.getWritableDatabase();
         Cursor c = null;
-        String sql = "SELECT picture_url FROM picture WHERE picture_id = 1;";
+        String sql = "SELECT * FROM picture WHERE picture_id = 1;";
         c = db_uriCheck.rawQuery(sql, new String[]{});
         c.moveToFirst();
 
