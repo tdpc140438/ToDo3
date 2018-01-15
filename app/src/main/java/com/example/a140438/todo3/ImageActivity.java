@@ -55,6 +55,16 @@ public class ImageActivity extends AppCompatActivity {
 
         db_uriCheck.close();
 */
+        try(FileInputStream fileInputStream = openFileInput(fileName);){
+            if(fileInputStream != null){
+                Bitmap bitmap = BitmapFactory.decodeStream(fileInputStream);
+                selectImage.setImageBitmap(bitmap);
+            }
+        }
+        catch(Exception e){
+            e.printStackTrace();
+        }
+
         imageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -118,6 +128,7 @@ public class ImageActivity extends AppCompatActivity {
                             e.printStackTrace();
                         }
 
+                        //取得した画像を表示
                         try(FileInputStream fileInputStream = openFileInput(fileName);){
                             Bitmap bitmap = BitmapFactory.decodeStream(fileInputStream);
                             selectImage.setImageBitmap(bitmap);
