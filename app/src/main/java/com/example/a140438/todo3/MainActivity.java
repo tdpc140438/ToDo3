@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.database.DatabaseUtils;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -22,11 +24,13 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
+import java.io.FileInputStream;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -50,12 +54,28 @@ public class MainActivity extends AppCompatActivity
     private  int progres_key = 0 ;
     private int ram;
     private  String package_def;
+    private String fileName = "picture_now";
+    private ImageView main_image;
 
     @SuppressLint("ResourceType")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        main_image = (ImageView)findViewById(R.id.main_image);
+        try(FileInputStream fileInputStream = openFileInput(fileName);){
+            if(fileInputStream != null){
+                Bitmap bitmap = BitmapFactory.decodeStream(fileInputStream);
+                main_image.setImageBitmap(bitmap);
+            }
+        }
+        catch(Exception e){
+            e.printStackTrace();
+        }
+
+
+
 
         //SQLite
         OpenHelper helper = new OpenHelper(this);

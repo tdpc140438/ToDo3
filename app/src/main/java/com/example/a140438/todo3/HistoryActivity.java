@@ -62,7 +62,8 @@ public class HistoryActivity extends AppCompatActivity {
 
                 //それぞれのビューにそれぞれの対応テキストを追加
                 goal_name[i].setText(String.format("%s",c_past.getString(1)));
-                success_days[i].setText(String.format("%d/ %d/ %d",c_past.getInt(2),c_past.getInt(3),c_past.getInt(4)));
+                success_days[i].setText(String.format("    %d/%d/%d",c_past.getInt(2),c_past.getInt(3),c_past.getInt(4)));
+
 
                 //横レイアウトの作成
                 width_Layout[i].setOrientation(width_Layout[i].HORIZONTAL);
@@ -81,8 +82,6 @@ public class HistoryActivity extends AppCompatActivity {
 
                 history_length_layout.addView(width_Layout[i]);
                 goal_name[i].setLayoutParams(buttonLayoutParams);
-
-
 
 
                 mov_past = c_past.moveToNext();
