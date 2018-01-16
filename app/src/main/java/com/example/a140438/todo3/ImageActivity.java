@@ -43,18 +43,8 @@ public class ImageActivity extends AppCompatActivity {
         selectImage = (ImageView)findViewById(R.id.selectImage);
         imageButton = (Button)findViewById(R.id.imageButton);
         imageSetEnd = (Button)findViewById(R.id.imageSetEnd);
-/*
-        OpenHelper helper = new OpenHelper(this);
-        final SQLiteDatabase db_uriCheck = helper.getWritableDatabase();
-        Cursor c = null;
-        String sql = "SELECT * FROM picture WHERE picture_id = 1;";
-        c = db_uriCheck.rawQuery(sql, new String[]{});
-        c.moveToFirst();
 
-        Uri picture_now = Uri.parse(c.getString(1));
-
-        db_uriCheck.close();
-*/
+        //既に画像を設定してあるなら、その画像を表示
         try(FileInputStream fileInputStream = openFileInput(fileName);){
             if(fileInputStream != null){
                 Bitmap bitmap = BitmapFactory.decodeStream(fileInputStream);
@@ -109,11 +99,9 @@ public class ImageActivity extends AppCompatActivity {
 
                     if(pfDescriptor != null){
                         FileDescriptor fileDescriptor = pfDescriptor.getFileDescriptor();
-//                        FileInputStream picture_data = new FileInputStream(fileDescriptor);
 
                         Bitmap bmp = BitmapFactory.decodeFileDescriptor(fileDescriptor);
                         pfDescriptor.close();
-                        //selectImage.setImageBitmap(bmp);
 
                         //Bitmapをbyteに変換
                         ByteArrayOutputStream bos = new ByteArrayOutputStream();
