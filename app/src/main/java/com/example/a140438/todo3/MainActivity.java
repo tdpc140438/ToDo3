@@ -217,8 +217,8 @@ public class MainActivity extends AppCompatActivity
              mov3 = c3.moveToNext();
              //目標詳細画面への遷移
              button[i].setOnClickListener(new View.OnClickListener() {
-                 @Override
-                 public void onClick(View v) {
+                         @Override
+                         public void onClick(View v) {
 
                     //Tagでidを取得する
                      Intent intent = new Intent(getApplication(), UpdateActivity.class);
