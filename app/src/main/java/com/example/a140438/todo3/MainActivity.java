@@ -56,6 +56,7 @@ public class MainActivity extends AppCompatActivity
     private  String package_def;
     private String fileName = "picture_now";
     private ImageView main_image;
+    public String random_mess;
 
     @SuppressLint("ResourceType")
     @Override
@@ -73,10 +74,6 @@ public class MainActivity extends AppCompatActivity
         catch(Exception e){
             e.printStackTrace();
         }
-
-
-
-
         //SQLite
         OpenHelper helper = new OpenHelper(this);
         final SQLiteDatabase db = helper.getWritableDatabase();
@@ -99,18 +96,7 @@ public class MainActivity extends AppCompatActivity
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
         //mailbutton 削除
-        /*FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
-*/
-
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -130,31 +116,17 @@ public class MainActivity extends AppCompatActivity
         scale = getResources().getDisplayMetrics().density;
 
 
-        // TextView インスタンス生成（本実装時はループを利用して設定）
-        final TextView textView = new TextView(this);
-        textView.setText("テスト目標1");
-
-        // setMargins (int left, int top, int right, int bottom)
-
         RelativeLayout.LayoutParams textLayoutParams = new RelativeLayout.LayoutParams(
                 RelativeLayout.LayoutParams.WRAP_CONTENT,
                 RelativeLayout.LayoutParams.WRAP_CONTENT);
 
         textLayoutParams.setMargins((int) (150 * scale), (int) (300 * scale), 0, 0);
-        textView.setLayoutParams(textLayoutParams);
 
+        //id生成
+        int Textid = View.generateViewId();
+        //idセット
 
-            //id生成
-            int Textid = View.generateViewId();
-            //idセット
-            textView.setId(Textid);
-            // TODO:relactive一時退避
-            // relative.addView(textView);
-
-        //横レイアウトへ追加
-        //layout2.addView(textView);
-//
-//
+        // TODO:relactive一時退避
 
         LinearLayout.LayoutParams buttonLayoutParams = new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.WRAP_CONTENT,
@@ -347,7 +319,7 @@ public class MainActivity extends AppCompatActivity
         }
         c3.close();
 
-        //起動後のテキスト表示 1/9 プロト完成
+        //起動後のテキスト表示
         TextView words_textView =findViewById(R.id.words_textView);
         ram=(int)(Math.random()*3)+26;
 
@@ -372,6 +344,41 @@ public class MainActivity extends AppCompatActivity
         String result = m.replaceAll(c_User_Name.getString(1));
         words_textView.setText(result);
         c_User_Name.close();
+
+
+        //imageViewをタップした時
+        ImageView mainImage = (ImageView)findViewById(R.id.main_image);
+        mainImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                TextView words_textView =findViewById(R.id.words_textView);
+                ram=(int)(Math.random()*3)+1;
+
+                //乱数生成確認
+                Log.d("Ram","変数 ram は「" + ram + "」");
+                Cursor c_Ramdom = null;
+                Cursor c_User_Name = null;
+
+                //乱数に応じてテキストを取得する。
+                String sql_ram = "SELECT * FROM words WHERE switch = " + ram + " AND package_id = '" + package_def + "';";
+                c_Ramdom = db.rawQuery(sql_ram, new String[]{});
+
+                //設定しているユーザー名を取得する。
+                String sql_User_Name = "SELECT * FROM user ;";
+                c_User_Name = db.rawQuery(sql_User_Name, new String[]{});
+                boolean mov_Ram = c_Ramdom.moveToFirst();
+                boolean mov_User = c_User_Name.moveToFirst();
+                String str = c_Ramdom.getString(2);
+                String regex = "name";
+                Pattern p = Pattern.compile(regex);
+                Matcher m = p.matcher(str);
+                String result = m.replaceAll(c_User_Name.getString(1));
+                words_textView.setText(result);
+                c_User_Name.close();
+
+            }
+        });
 
 
 
@@ -552,4 +559,13 @@ public class MainActivity extends AppCompatActivity
                 }
                 return reInt;
             }
+            //メイン画面に遷移した時のランダム台詞と画像をタップした時のランダム台詞を表示する。
+            public String random_words(int ram){
+
+
+
+
+                return random_mess;
+            }
+
     }
