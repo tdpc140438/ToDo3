@@ -3,13 +3,17 @@ package com.example.a140438.todo3;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.io.FileInputStream;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -20,11 +24,26 @@ import java.util.regex.Pattern;
 public class SuccessActivity extends AppCompatActivity {
 
     private  String package_def;
+    private String fileName = "picture_now";
+    private ImageView success_image;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_success);
+
+        success_image = (ImageView)findViewById(R.id.success_image);
+        try(FileInputStream fileInputStream = openFileInput(fileName);){
+            if(fileInputStream != null){
+                Bitmap bitmap = BitmapFactory.decodeStream(fileInputStream);
+                success_image.setImageBitmap(bitmap);
+            }
+        }
+        catch(Exception e){
+            e.printStackTrace();
+        }
+
 
         //SQLite使用のため
         OpenHelper helper = new OpenHelper(this);

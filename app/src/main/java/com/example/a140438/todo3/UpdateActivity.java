@@ -164,12 +164,9 @@ public class UpdateActivity extends AppCompatActivity {
                                 // OKをタップしたときの処理
 
                                 Intent dbIntent_delete = new Intent(UpdateActivity.this, MainActivity.class);
-
-                String delete_sql = "DELETE FROM goal WHERE goal_id = " + goal_id + ";";
-
-                db.execSQL(delete_sql);
-
-                startActivity(dbIntent_delete);
+                                String delete_sql = "DELETE FROM goal WHERE goal_id = " + goal_id + ";";
+                                db.execSQL(delete_sql);
+                                startActivity(dbIntent_delete);
                             }
                         })
                         .setNegativeButton("Cancel", null)
