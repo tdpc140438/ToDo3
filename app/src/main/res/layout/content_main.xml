@@ -35,6 +35,7 @@
         android:id="@+id/words_textView"
         android:layout_width="308dp"
         android:layout_height="61dp"
+        android:background="@drawable/frame_style"
         android:text="TextView"
         android:textAlignment="viewStart"
         android:textAppearance="@android:style/TextAppearance.Material.Body1"
