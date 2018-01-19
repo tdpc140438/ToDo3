@@ -67,6 +67,29 @@ public class WordsAdd extends Activity {
         new_CHAR_C = add_CHAR_C.getText().toString();
         new_PER0 = add_PER0.getText().toString();
         new_PER10 = add_PER10.getText().toString();
-        new_PER10 = add_PER10.getText().toString();
+        new_PER20 = add_PER20.getText().toString();
+        new_PER30 = add_PER30.getText().toString();
+        new_PER40 = add_PER40.getText().toString();
+        new_PER50 = add_PER50.getText().toString();
+        new_PER60 = add_PER60.getText().toString();
+        new_PER70 = add_PER70.getText().toString();
+        new_PER80 = add_PER80.getText().toString();
+        new_PER90 = add_PER90.getText().toString();
+        new_GOAL_PER0 = add_GOAL_PER0.getText().toString();
+        new_GOAL_PER10 = add_GOAL_PER10.getText().toString();
+        new_GOAL_PER20 = add_GOAL_PER20.getText().toString();
+        new_GOAL_PER30 = add_GOAL_PER30.getText().toString();
+        new_GOAL_PER40 = add_GOAL_PER40.getText().toString();
+        new_GOAL_PER50 = add_GOAL_PER50.getText().toString();
+        new_GOAL_PER60 = add_GOAL_PER60.getText().toString();
+        new_GOAL_PER70 = add_GOAL_PER70.getText().toString();
+        new_GOAL_PER80 = add_GOAL_PER80.getText().toString();
+        new_GOAL_PER90 = add_GOAL_PER90.getText().toString();
+        new_SUCC = add_SUCC.getText().toString();
+        new_FAIL = add_FAIL.getText().toString();
+        new_NORM_A = add_NORM_A.getText().toString();
+        new_NORM_B = add_NORM_B.getText().toString();
+        new_NORM_C = add_NORM_C.getText().toString();
+
     }
 }
