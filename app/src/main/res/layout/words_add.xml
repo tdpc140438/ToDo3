@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ScrollView
+        android:layout_width="360dp"
+        android:layout_height="435dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.48"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.301">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:hint="言語パック情報" />
+
+            <EditText
+                android:id="@+id/add_package_id"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:hint="言語パックID(英数)" />
+
+            <EditText
+                android:id="@+id/add_package_name"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:hint="言語パック名(日本語)" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="台詞" />
+
+            <EditText
+                android:id="@+id/add_CHAR_A"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:hint="キャラクタータッチ台詞Ａ" />
+
+            <EditText
+                android:id="@+id/add_CHAR_B"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:hint="キャラクタータッチ台詞Ｂ" />
+
+            <EditText
+                android:id="@+id/add_CHAR_C"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:hint="キャラクタータッチ台詞Ｃ" />
+
+            <EditText
+                android:id="@+id/add_PER0"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:hint="進捗率０％台詞" />
+
+            <EditText
+                android:id="@+id/add_PER10"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:hint="進捗率１０％台詞" />
+
+            <EditText
+                android:id="@+id/add_PER20"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:hint="進捗率２０％台詞" />
+
+            <EditText
+                android:id="@+id/add_PER30"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:hint="進捗率３０％台詞" />
+
+            <EditText
+                android:id="@+id/add_PER40"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:hint="進捗率４０％台詞" />
+
+            <EditText
+                android:id="@+id/add_PER50"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:hint="進捗率５０％台詞" />
+
+            <EditText
+                android:id="@+id/add_PER60"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:hint="進捗率６０％台詞" />
+
+            <EditText
+                android:id="@+id/add_PER70"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:hint="進捗率７０％台詞" />
+
+            <EditText
+                android:id="@+id/add_PER80"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:hint="進捗率８０％台詞" />
+
+            <EditText
+                android:id="@+id/add_PER90"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:hint="進捗率９０％台詞" />
+
+            <EditText
+                android:id="@+id/add_GOAL_PER0"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:hint="進捗率０％台詞（目標タップ時）" />
+
+            <EditText
+                android:id="@+id/add_GOAL_PER10"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:hint="進捗率１０％台詞（目標タップ時）" />
+
+            <EditText
+                android:id="@+id/add_GOAL_PER20"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:hint="進捗率２０％台詞（目標タップ時）" />
+
+            <EditText
+                android:id="@+id/add_GOAL_PER30"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:hint="進捗率３０％台詞（目標タップ時）" />
+
+            <EditText
+                android:id="@+id/add_GOAL_PER40"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:hint="進捗率４０％台詞（目標タップ時）" />
+
+            <EditText
+                android:id="@+id/add_GOAL_PER50"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:hint="進捗率５０％台詞（目標タップ時）" />
+
+            <EditText
+                android:id="@+id/add_GOAL_PER60"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:hint="進捗率６０％台詞（目標タップ時）" />
+
+            <EditText
+                android:id="@+id/add_GOAL_PER70"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:hint="進捗率７０％台詞（目標タップ時）" />
+
+            <EditText
+                android:id="@+id/add_GOAL_PER80"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:hint="進捗率８０％台詞（目標タップ時）" />
+
+            <EditText
+                android:id="@+id/add_GOAL_PER90"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:hint="進捗率９０％台詞（目標タップ時）" />
+
+            <EditText
+                android:id="@+id/add_SUCC"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:hint="目標達成成功(進捗率100％)の台詞" />
+
+            <EditText
+                android:id="@+id/add_FAIL"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:hint="目標達成失敗の台詞" />
+
+            <EditText
+                android:id="@+id/add_NORM_A"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:hint="汎用台詞Ａ" />
+
+            <EditText
+                android:id="@+id/add_NORM_B"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:hint="汎用台詞Ｂ" />
+
+            <EditText
+                android:id="@+id/add_NORM_C"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:hint="汎用台詞Ｃ" />
+
+        </LinearLayout>
+
+    </ScrollView>
+
+    <Button
+        android:id="@+id/words_add_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="追加"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.993" />
+</android.support.constraint.ConstraintLayout>

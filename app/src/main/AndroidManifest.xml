@@ -33,7 +33,8 @@
         <activity android:name=".ImageActivity" />
         <activity android:name=".UpdateActivity" />
         <activity android:name=".Debug" />
-        <activity android:name=".SuccessActivity"></activity>
+        <activity android:name=".SuccessActivity"/>
+        <activity android:name=".WordsAdd"></activity>
     </application>
 
 </manifest>

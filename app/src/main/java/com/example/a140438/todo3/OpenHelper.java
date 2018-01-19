@@ -11,7 +11,7 @@ public class OpenHelper extends SQLiteOpenHelper{
 
         //以降、データベースに変更を加える際はversionを更新していく
         //使用していないversionのsuper～の記述はコメントアウトすること
-
+        
         //version2：userテーブルの修正
         //super(context, "TODO_DB", null, 2);
 
