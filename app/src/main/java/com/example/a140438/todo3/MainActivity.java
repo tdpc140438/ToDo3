@@ -9,6 +9,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.util.Log;
@@ -57,6 +58,8 @@ public class MainActivity extends AppCompatActivity
     private String fileName = "picture_now";
     private ImageView main_image;
     public String random_mess;
+    private ConstraintLayout constraintLayout[] = new ConstraintLayout[50];
+    private RelativeLayout relat[] = new RelativeLayout[50];
 
     @SuppressLint("ResourceType")
     @Override
@@ -109,6 +112,7 @@ public class MainActivity extends AppCompatActivity
 
         //下に書くようにする。
         //最初に設定されている言語パックの設定
+
         //縦レイアウト
         LinearLayout layout = (LinearLayout) findViewById(R.id.length_layout);
 
@@ -132,6 +136,10 @@ public class MainActivity extends AppCompatActivity
                 LinearLayout.LayoutParams.WRAP_CONTENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT);
 
+        //LinearLayout.LayoutParams buttonLayoutParams = new LinearLayout.LayoutParams(100,100);
+
+
+
         Cursor c3 = null;
         //select
         String sql3 = "SELECT * FROM goal;";
@@ -149,7 +157,11 @@ public class MainActivity extends AppCompatActivity
             Log.d("def","変数 package_def は「" + package_def + "」");
 
 
-        //動的ボタン生成部分
+
+
+
+
+                //動的ボタン生成部分 LinerLayout
         for(int i = 1 ; i < button.length;i++) {
             TextView words_textView =findViewById(R.id.words_textView);
          if(mov3) {
@@ -169,13 +181,21 @@ public class MainActivity extends AppCompatActivity
              g_View[i].setText(String.format("%d.%s",i, c3.getString(1)));
              //横レイアウトの作成
              linearLayout[i].setOrientation(linearLayout[i].HORIZONTAL);
-             linearLayout[i].setLayoutParams(
+//             linearLayout[i].setLayoutParams(
+//                     new LinearLayout.LayoutParams(
+//                             LinearLayout.LayoutParams.WRAP_CONTENT,    //文字列の幅に合わせる
+//                             LinearLayout.LayoutParams.WRAP_CONTENT));  //文字列の高さに合わせる
+
                      new LinearLayout.LayoutParams(
-                             LinearLayout.LayoutParams.WRAP_CONTENT,    //文字列の幅に合わせる
-                             LinearLayout.LayoutParams.WRAP_CONTENT));  //文字列の高さに合わせる
+                             LinearLayout.LayoutParams.MATCH_PARENT,    //文字列の幅に合わせる
+                             LinearLayout.LayoutParams.MATCH_PARENT);  //文字列の高さに合わせる
+
 
              //ボタンのレイアウト設定
              button[i].setLayoutParams(buttonLayoutParams);
+             //テキストのレイアウト設定
+             g_View[i].setLayoutParams(textLayoutParams);
+
 
              //横レイアウトに目標用ビューを追加
              linearLayout[i].addView(g_View[i]);
@@ -183,7 +203,7 @@ public class MainActivity extends AppCompatActivity
 
              //横レイアウトにボタンを追加
              linearLayout[i].addView(button[i]);
-             g_View[i].setLayoutParams(buttonLayoutParams);
+
 
              //遷移する際のデータ渡し用
              mov3 = c3.moveToNext();
