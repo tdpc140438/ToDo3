@@ -88,13 +88,13 @@ public class MainActivity extends AppCompatActivity
 
         boolean mov = c.moveToFirst();
 
-        while(mov){
-            TextView textView3 = findViewById(R.id.textView3);
-            textView3.setText(String.format("user_name : %s,  user_level : %d",
-                    c.getString(1), c.getInt(2)));
-            mov = c.moveToNext();
-            //layout.addView(textView);
-        }
+//        while(mov){
+//            TextView textView3 = findViewById(R.id.textView3);
+//            textView3.setText(String.format("user_name : %s,  user_level : %d",
+//                    c.getString(1), c.getInt(2)));
+//            mov = c.moveToNext();
+//            //layout.addView(textView);
+//        }
 
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -131,10 +131,13 @@ public class MainActivity extends AppCompatActivity
         //idセット
 
         // TODO:relactive一時退避
+        ScrollView scroll = (ScrollView)findViewById(R.id.scroll);
 
         LinearLayout.LayoutParams buttonLayoutParams = new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.WRAP_CONTENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT);
+
+
 
         //LinearLayout.LayoutParams buttonLayoutParams = new LinearLayout.LayoutParams(100,100);
 
@@ -155,9 +158,6 @@ public class MainActivity extends AppCompatActivity
             boolean mov_pack = c_pack.moveToFirst();
             package_def =c_pack.getString(0);
             Log.d("def","変数 package_def は「" + package_def + "」");
-
-
-
 
 
 
@@ -194,7 +194,7 @@ public class MainActivity extends AppCompatActivity
              //ボタンのレイアウト設定
              button[i].setLayoutParams(buttonLayoutParams);
              //テキストのレイアウト設定
-             g_View[i].setLayoutParams(textLayoutParams);
+             g_View[i].setLayoutParams(buttonLayoutParams);
 
 
              //横レイアウトに目標用ビューを追加
@@ -407,17 +407,17 @@ public class MainActivity extends AppCompatActivity
         //画像の入れ替え
         //テキストビューとボタンのレイアウト
 
-        //dbチェックボタン
-        Button checkButton = (Button)findViewById(R.id.checkButton);
-        checkButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent dbIntent = new Intent(MainActivity.this,
-                        Debug.class);
-
-                startActivity(dbIntent);
-            }
-        });
+        //dbチェックボタン/デバッグボタン
+//        Button checkButton = (Button)findViewById(R.id.checkButton);
+//        checkButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Intent dbIntent = new Intent(MainActivity.this,
+//                        Debug.class);
+//
+//                startActivity(dbIntent);
+//            }
+//        });
 
 
     }
