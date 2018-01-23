@@ -71,6 +71,19 @@ public class MainActivity extends AppCompatActivity
         try(FileInputStream fileInputStream = openFileInput(fileName);){
             if(fileInputStream != null){
                 Bitmap bitmap = BitmapFactory.decodeStream(fileInputStream);
+//                int width = bitmap.getWidth();
+//                int height = bitmap.getHeight();
+//                int[] pixels = new int[width * height];
+//                int c = bitmap.getPixel(0,0);
+//                Bitmap bitmap_png = Bitmap.createBitmap(width,height,Bitmap.Config.ARGB_8888);
+//                bitmap.getPixels(pixels,0,width,0,0,width,height);
+//                for(int y = 0; y< height;y++){
+//                    for(int x = 0; x< height;x++){
+//                        if(pixels[x + y * width] == c){pixels[x + y * width]=0;}
+//                    }
+//                }
+//                bitmap_png.eraseColor(Color.argb(0,0,0,0));
+//                bitmap_png.setPixels(pixels,0,width,0,0,width,height);
                 main_image.setImageBitmap(bitmap);
             }
         }
@@ -502,10 +515,41 @@ public class MainActivity extends AppCompatActivity
         final Date date = new Date(System.currentTimeMillis());
         return df.format(date);
     }
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Log.d("onResume","onResumeに入りました$$$");
+
+        //SQLite
+        OpenHelper helper = new OpenHelper(this);
+        final SQLiteDatabase db = helper.getWritableDatabase();
+        Cursor c3 = null;
+        //select
+        String sql3 = "SELECT * FROM goal;";
+        c3 = db.rawQuery(sql3, new String[]{});
+        boolean mov3 = c3.moveToFirst();
+
+        for(int i = 1 ; i < button.length;i++) {
+            TextView words_textView =findViewById(R.id.words_textView);
+            if(mov3) {
+
+                g_View[i].setText(String.format("%d.%s",i, c3.getString(1)));
+
+                mov3 = c3.moveToNext();
+
+            }
+        }
+
+
+
+
+
+            }
+
 
     //進捗を変更した場合の処理
-    protected void onActivityResult(int requestCode , int RESULT_OK , Intent dbIntent_update){
-        if(RESULT_OK!=0) {
+    protected void onActivityResult(int requestCode , int RESULT_OK , Intent dbIntent_update) {
+        if (RESULT_OK != 0) {
             TextView words_textView = findViewById(R.id.words_textView);
             //SQLite
             OpenHelper helper = new OpenHelper(this);
@@ -542,9 +586,9 @@ public class MainActivity extends AppCompatActivity
             //words_textView.setText(String.format("%s", c5.getString(2)));
             c_User_Name.close();
         }
+    }
 
-        }
-            public int words_select(int reInt){
+    public int words_select(int reInt){
                 switch (reInt) {
                     case 0:
                         reInt = 4;

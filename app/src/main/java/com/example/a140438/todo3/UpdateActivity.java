@@ -7,6 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -127,6 +128,23 @@ public class UpdateActivity extends AppCompatActivity {
             }
         });
 
+        int checkedId = RadioGroup.getCheckedRadioButtonId();
+
+        switch (checkedId){
+            case R.id.radioButton00:
+                goal_category = 0;
+                break;
+            case R.id.radioButton10:
+                goal_category = 1;
+                break;
+            case R.id.radioButton20:
+                goal_category = 2;
+                break;
+            case R.id.radioButton30:
+                goal_category = 3;
+                break;
+        }
+
         RadioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup radioGroup, int i) {
@@ -199,7 +217,6 @@ public class UpdateActivity extends AppCompatActivity {
                                     //startActivity(dbIntent_update);
                                     finish();
                                 }
-
                                 else{
                                     Intent success = new Intent(UpdateActivity.this,SuccessActivity.class);
                                     success.putExtra("goal_name",edit_goal.getText().toString());
@@ -209,4 +226,11 @@ public class UpdateActivity extends AppCompatActivity {
              }
           });
      }
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Log.d("onResume","onResumeに入りました");
+
+    }
+
 }

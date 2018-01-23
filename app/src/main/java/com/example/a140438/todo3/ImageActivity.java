@@ -93,7 +93,7 @@ public class ImageActivity extends AppCompatActivity {
                 try{
                     Uri uri = resultData.getData();
 
-                    text_acImage.setText(String.format("Uri: %s", uri.toString()));
+                    //text_acImage.setText(String.format("Uri: %s", uri.toString()));
 
                     pfDescriptor = getContentResolver().openFileDescriptor(uri, "r");
 
