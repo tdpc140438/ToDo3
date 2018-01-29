@@ -7,6 +7,8 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.ParcelFileDescriptor;
 import android.support.v7.app.AppCompatActivity;
@@ -48,7 +50,9 @@ public class ImageActivity extends AppCompatActivity {
         try(FileInputStream fileInputStream = openFileInput(fileName);){
             if(fileInputStream != null){
                 Bitmap bitmap = BitmapFactory.decodeStream(fileInputStream);
-                selectImage.setImageBitmap(bitmap);
+                Drawable draw = new BitmapDrawable(getResources(),bitmap);
+                selectImage.setImageDrawable(draw);
+               // selectImage.setImageBitmap(bitmap);
             }
         }
         catch(Exception e){

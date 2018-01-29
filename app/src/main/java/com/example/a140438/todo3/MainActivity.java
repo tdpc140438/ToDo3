@@ -71,6 +71,8 @@ public class MainActivity extends AppCompatActivity
         try(FileInputStream fileInputStream = openFileInput(fileName);){
             if(fileInputStream != null){
                 Bitmap bitmap = BitmapFactory.decodeStream(fileInputStream);
+
+
 //                int width = bitmap.getWidth();
 //                int height = bitmap.getHeight();
 //                int[] pixels = new int[width * height];

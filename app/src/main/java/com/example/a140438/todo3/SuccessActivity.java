@@ -13,6 +13,9 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.target.GlideDrawableImageViewTarget;
+
 import java.io.FileInputStream;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -93,7 +96,7 @@ public class SuccessActivity extends AppCompatActivity {
 
         //メッセージ表示
         succ_mess.setText(result);
-        succ_name.setText(goal_name+"を達成しました！おめでとうございます！");
+        succ_name.setText("「" + goal_name+"」を達成しました！おめでとうございます！");
 
         /*テスト用*/
         // 現在日時の取得
@@ -142,6 +145,11 @@ public class SuccessActivity extends AppCompatActivity {
                 * */
             }
         });
+
+        ImageView imageView = (ImageView) findViewById(R.id.check);
+        GlideDrawableImageViewTarget target = new GlideDrawableImageViewTarget(imageView);
+        Glide.with(this).load(R.raw.check).into(target);
+
     }
 };
 
