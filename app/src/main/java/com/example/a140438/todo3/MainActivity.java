@@ -494,11 +494,13 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_manage) {
             Intent d = new Intent(this, com.example.a140438.todo3.ImageActivity.class);
             startActivity(d);
-        } /*else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
-
-        }*/
+        } else if (id == R.id.nav_WordsAdd) {
+            Intent e = new Intent(this, com.example.a140438.todo3.WordsAdd.class);
+            startActivity(e);
+        }
+//        else if (id == R.id.nav_send) {
+//
+//        }
 
         /*メニューバーのヘッダー部分の実装*/
         //naivigationMenuの各メニューがタップされた場合のリスナーを指定する
