@@ -14,13 +14,6 @@ import android.widget.EditText;
  */
 
 public class WordsAdd extends Activity {
-    String new_package_id, new_package_name,
-            new_CHAR_A, new_CHAR_B, new_CHAR_C,
-            new_PER0, new_PER10, new_PER20, new_PER30, new_PER40,
-            new_PER50, new_PER60, new_PER70, new_PER80, new_PER90,
-            new_GOAL_PER0, new_GOAL_PER10, new_GOAL_PER20, new_GOAL_PER30, new_GOAL_PER40,
-            new_GOAL_PER50, new_GOAL_PER60, new_GOAL_PER70, new_GOAL_PER80, new_GOAL_PER90,
-            new_SUCC, new_FAIL, new_NORM_A, new_NORM_B, new_NORM_C;
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
@@ -62,37 +55,6 @@ public class WordsAdd extends Activity {
         final EditText add_NORM_B = (EditText)findViewById(R.id.add_NORM_B);
         final EditText add_NORM_C = (EditText)findViewById(R.id.add_NORM_C);
 
-        new_package_id = add_package_id.getText().toString();
-        new_package_name = add_package_name.getText().toString();
-        new_CHAR_A = add_CHAR_A.getText().toString();
-        new_CHAR_B = add_CHAR_B.getText().toString();
-        new_CHAR_C = add_CHAR_C.getText().toString();
-        new_PER0 = add_PER0.getText().toString();
-        new_PER10 = add_PER10.getText().toString();
-        new_PER20 = add_PER20.getText().toString();
-        new_PER30 = add_PER30.getText().toString();
-        new_PER40 = add_PER40.getText().toString();
-        new_PER50 = add_PER50.getText().toString();
-        new_PER60 = add_PER60.getText().toString();
-        new_PER70 = add_PER70.getText().toString();
-        new_PER80 = add_PER80.getText().toString();
-        new_PER90 = add_PER90.getText().toString();
-        new_GOAL_PER0 = add_GOAL_PER0.getText().toString();
-        new_GOAL_PER10 = add_GOAL_PER10.getText().toString();
-        new_GOAL_PER20 = add_GOAL_PER20.getText().toString();
-        new_GOAL_PER30 = add_GOAL_PER30.getText().toString();
-        new_GOAL_PER40 = add_GOAL_PER40.getText().toString();
-        new_GOAL_PER50 = add_GOAL_PER50.getText().toString();
-        new_GOAL_PER60 = add_GOAL_PER60.getText().toString();
-        new_GOAL_PER70 = add_GOAL_PER70.getText().toString();
-        new_GOAL_PER80 = add_GOAL_PER80.getText().toString();
-        new_GOAL_PER90 = add_GOAL_PER90.getText().toString();
-        new_SUCC = add_SUCC.getText().toString();
-        new_FAIL = add_FAIL.getText().toString();
-        new_NORM_A = add_NORM_A.getText().toString();
-        new_NORM_B = add_NORM_B.getText().toString();
-        new_NORM_C = add_NORM_C.getText().toString();
-
 
         Button words_add_button = (Button)findViewById(R.id.words_add_button);
         words_add_button.setOnClickListener(new View.OnClickListener() {
@@ -102,65 +64,65 @@ public class WordsAdd extends Activity {
                         MainActivity.class);
 
                 String package_add = "INSERT INTO package(package_id, package_name, unlock)" +
-                        "VALUES('" + new_package_id +"', '" + new_package_name + "', 1);";
+                        "VALUES('" + add_package_id.getText().toString() +"', '" + add_package_name.getText().toString() + "', 1);";
 
                 String CHAR_A_add = "INSERT INTO words(words_id, package_id, words_text, switch)" +
-                        "VALUES('" + new_package_id + "_CHAR_A', '" + new_package_id + "', '" + new_CHAR_A + "', 1)";
+                        "VALUES('" + add_package_id.getText().toString() + "_CHAR_A', '" + add_package_id.getText().toString() + "', '" + add_CHAR_A.getText().toString() + "', 1)";
                 String CHAR_B_add = "INSERT INTO words(words_id, package_id, words_text, switch)" +
-                        "VALUES('" + new_package_id + "_CHAR_B', '" + new_package_id + "', '" + new_CHAR_B + "', 2)";
+                        "VALUES('" + add_package_id.getText().toString() + "_CHAR_B', '" + add_package_id.getText().toString() + "', '" + add_CHAR_B.getText().toString() + "', 2)";
                 String CHAR_C_add = "INSERT INTO words(words_id, package_id, words_text, switch)" +
-                        "VALUES('" + new_package_id + "_CHAR_C', '" + new_package_id + "', '" + new_CHAR_C + "', 3)";
+                        "VALUES('" + add_package_id.getText().toString() + "_CHAR_C', '" + add_package_id.getText().toString() + "', '" + add_CHAR_C.getText().toString() + "', 3)";
                 String PER0_add = "INSERT INTO words(words_id, package_id, words_text, switch)" +
-                        "VALUES('PER0', '" + new_package_id + "', '" + new_PER0 + "', 4)";
+                        "VALUES('PER0', '" + add_package_id.getText().toString() + "', '" + add_PER0.getText().toString() + "', 4)";
                 String PER10_add = "INSERT INTO words(words_id, package_id, words_text, switch)" +
-                        "VALUES('PER10', '" + new_package_id + "', '" + new_PER10 + "', 5)";
+                        "VALUES('PER10', '" + add_package_id.getText().toString() + "', '" + add_PER10.getText().toString() + "', 5)";
                 String PER20_add = "INSERT INTO words(words_id, package_id, words_text, switch)" +
-                        "VALUES('PER20', '" + new_package_id + "', '" + new_PER20 + "', 6)";
+                        "VALUES('PER20', '" + add_package_id.getText().toString() + "', '" + add_PER20.getText().toString() + "', 6)";
                 String PER30_add = "INSERT INTO words(words_id, package_id, words_text, switch)" +
-                        "VALUES('PER30', '" + new_package_id + "', '" + new_PER30 + "', 7)";
+                        "VALUES('PER30', '" + add_package_id.getText().toString() + "', '" + add_PER30.getText().toString() + "', 7)";
                 String PER40_add = "INSERT INTO words(words_id, package_id, words_text, switch)" +
-                        "VALUES('PER40', '" + new_package_id + "', '" + new_PER40 + "', 8)";
+                        "VALUES('PER40', '" + add_package_id.getText().toString() + "', '" + add_PER40.getText().toString() + "', 8)";
                 String PER50_add = "INSERT INTO words(words_id, package_id, words_text, switch)" +
-                        "VALUES('PER50', '" + new_package_id + "', '" + new_PER50 + "', 9)";
+                        "VALUES('PER50', '" + add_package_id.getText().toString() + "', '" + add_PER50.getText().toString() + "', 9)";
                 String PER60_add = "INSERT INTO words(words_id, package_id, words_text, switch)" +
-                        "VALUES('PER60', '" + new_package_id + "', '" + new_PER60 + "', 10)";
+                        "VALUES('PER60', '" + add_package_id.getText().toString() + "', '" + add_PER60.getText().toString() + "', 10)";
                 String PER70_add = "INSERT INTO words(words_id, package_id, words_text, switch)" +
-                        "VALUES('PER70', '" + new_package_id + "', '" + new_PER70 + "', 11)";
+                        "VALUES('PER70', '" + add_package_id.getText().toString() + "', '" + add_PER70.getText().toString() + "', 11)";
                 String PER80_add = "INSERT INTO words(words_id, package_id, words_text, switch)" +
-                        "VALUES('PER80', '" + new_package_id + "', '" + new_PER80 + "', 12)";
+                        "VALUES('PER80', '" + add_package_id.getText().toString() + "', '" + add_PER80.getText().toString() + "', 12)";
                 String PER90_add = "INSERT INTO words(words_id, package_id, words_text, switch)" +
-                        "VALUES('PER90', '" + new_package_id + "', '" + new_PER90 + "', 13)";
+                        "VALUES('PER90', '" + add_package_id.getText().toString() + "', '" + add_PER90.getText().toString() + "', 13)";
 
                 String PER0_GOAL_add = "INSERT INTO words(words_id, package_id, words_text, switch)" +
-                        "VALUES('" + new_package_id + "_PER0_GOAL', '" + new_package_id + "', '" + new_GOAL_PER0 + "', 14)";
+                        "VALUES('" + add_package_id.getText().toString() + "_PER0_GOAL', '" + add_package_id.getText().toString() + "', '" + add_GOAL_PER0.getText().toString() + "', 14)";
                 String PER10_GOAL_add = "INSERT INTO words(words_id, package_id, words_text, switch)" +
-                        "VALUES('" + new_package_id + "_PER10_GOAL', '" + new_package_id + "', '" + new_GOAL_PER10 + "', 15)";
+                        "VALUES('" + add_package_id.getText().toString() + "_PER10_GOAL', '" + add_package_id.getText().toString() + "', '" + add_GOAL_PER10.getText().toString() + "', 15)";
                 String PER20_GOAL_add = "INSERT INTO words(words_id, package_id, words_text, switch)" +
-                        "VALUES('" + new_package_id + "_PER20_GOAL', '" + new_package_id + "', '" + new_GOAL_PER20 + "', 16)";
+                        "VALUES('" + add_package_id.getText().toString() + "_PER20_GOAL', '" + add_package_id.getText().toString() + "', '" + add_GOAL_PER20.getText().toString() + "', 16)";
                 String PER30_GOAL_add = "INSERT INTO words(words_id, package_id, words_text, switch)" +
-                        "VALUES('" + new_package_id + "_PER30_GOAL', '" + new_package_id + "', '" + new_GOAL_PER30 + "', 17)";
+                        "VALUES('" + add_package_id.getText().toString() + "_PER30_GOAL', '" + add_package_id.getText().toString() + "', '" + add_GOAL_PER30.getText().toString() + "', 17)";
                 String PER40_GOAL_add = "INSERT INTO words(words_id, package_id, words_text, switch)" +
-                        "VALUES('" + new_package_id + "_PER40_GOAL', '" + new_package_id + "', '" + new_GOAL_PER40 + "', 18)";
+                        "VALUES('" + add_package_id.getText().toString() + "_PER40_GOAL', '" + add_package_id.getText().toString() + "', '" + add_GOAL_PER40.getText().toString() + "', 18)";
                 String PER50_GOAL_add = "INSERT INTO words(words_id, package_id, words_text, switch)" +
-                        "VALUES('" + new_package_id + "_PER50_GOAL', '" + new_package_id + "', '" + new_GOAL_PER50 + "', 19)";
+                        "VALUES('" + add_package_id.getText().toString() + "_PER50_GOAL', '" + add_package_id.getText().toString() + "', '" + add_GOAL_PER50.getText().toString() + "', 19)";
                 String PER60_GOAL_add = "INSERT INTO words(words_id, package_id, words_text, switch)" +
-                        "VALUES('" + new_package_id + "_PER60_GOAL', '" + new_package_id + "', '" + new_GOAL_PER60 + "', 20)";
+                        "VALUES('" + add_package_id.getText().toString() + "_PER60_GOAL', '" + add_package_id.getText().toString() + "', '" + add_GOAL_PER60.getText().toString() + "', 20)";
                 String PER70_GOAL_add = "INSERT INTO words(words_id, package_id, words_text, switch)" +
-                        "VALUES('" + new_package_id + "_PER70_GOAL', '" + new_package_id + "', '" + new_GOAL_PER70 + "', 21)";
+                        "VALUES('" + add_package_id.getText().toString() + "_PER70_GOAL', '" + add_package_id.getText().toString() + "', '" + add_GOAL_PER70.getText().toString() + "', 21)";
                 String PER80_GOAL_add = "INSERT INTO words(words_id, package_id, words_text, switch)" +
-                        "VALUES('" + new_package_id + "_PER80_GOAL', '" + new_package_id + "', '" + new_GOAL_PER80 + "', 22)";
+                        "VALUES('" + add_package_id.getText().toString() + "_PER80_GOAL', '" + add_package_id.getText().toString() + "', '" + add_GOAL_PER80.getText().toString() + "', 22)";
                 String PER90_GOAL_add = "INSERT INTO words(words_id, package_id, words_text, switch)" +
-                        "VALUES('" + new_package_id + "_PER90_GOAL', '" + new_package_id + "', '" + new_GOAL_PER90 + "', 23)";
+                        "VALUES('" + add_package_id.getText().toString() + "_PER90_GOAL', '" + add_package_id.getText().toString() + "', '" + add_GOAL_PER90.getText().toString() + "', 23)";
                 String SUCC_add = "INSERT INTO words(words_id, package_id, words_text, switch)" +
-                        "VALUES('" + new_package_id + "_SUCC', '" + new_package_id + "', '" + new_SUCC + "', 24)";
+                        "VALUES('" + add_package_id.getText().toString() + "_SUCC', '" + add_package_id.getText().toString() + "', '" + add_SUCC.getText().toString() + "', 24)";
                 String FAIL_add = "INSERT INTO words(words_id, package_id, words_text, switch)" +
-                        "VALUES('" + new_package_id + "_FAIL', '" + new_package_id + "', '" + new_FAIL + "', 25)";
+                        "VALUES('" + add_package_id.getText().toString() + "_FAIL', '" + add_package_id.getText().toString() + "', '" + add_FAIL.getText().toString() + "', 25)";
                 String NORM_A_add = "INSERT INTO words(words_id, package_id, words_text, switch)" +
-                        "VALUES('" + new_package_id + "_NORM_A', '" + new_package_id + "', '" + new_NORM_A + "', 26)";
+                        "VALUES('" + add_package_id.getText().toString() + "_NORM_A', '" + add_package_id.getText().toString() + "', '" + add_NORM_A.getText().toString() + "', 26)";
                 String NORM_B_add = "INSERT INTO words(words_id, package_id, words_text, switch)" +
-                        "VALUES('" + new_package_id + "_NORM_B', '" + new_package_id + "', '" + new_NORM_B + "', 27)";
+                        "VALUES('" + add_package_id.getText().toString() + "_NORM_B', '" + add_package_id.getText().toString() + "', '" + add_NORM_B.getText().toString() + "', 27)";
                 String NORM_C_add = "INSERT INTO words(words_id, package_id, words_text, switch)" +
-                        "VALUES('" + new_package_id + "_NORM_C', '" + new_package_id + "', '" + new_NORM_C + "', 28)";
+                        "VALUES('" + add_package_id.getText().toString() + "_NORM_C', '" + add_package_id.getText().toString() + "', '" + add_NORM_C.getText().toString() + "', 28)";
 
                 Log.d("SQL", "SQL1 : " + package_add);
                 Log.d("SQL", "SQL2 : " + CHAR_A_add);
@@ -192,7 +154,7 @@ public class WordsAdd extends Activity {
                 Log.d("SQL", "SQL28 : " + NORM_B_add);
                 Log.d("SQL", "SQL29 : " + NORM_C_add);
 
-                /*
+                
                 db.execSQL(package_add);
                 db.execSQL(CHAR_A_add);
                 db.execSQL(CHAR_B_add);
@@ -224,7 +186,7 @@ public class WordsAdd extends Activity {
                 db.execSQL(NORM_C_add);
 
                 startActivity(dbIntent);
-                */
+
             }
         });
     }
