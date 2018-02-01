@@ -199,30 +199,99 @@ public class UpdateActivity extends AppCompatActivity {
         add_Button20.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                                Intent dbIntent_update = new Intent(UpdateActivity.this,
+                final Intent dbIntent_update = new Intent(UpdateActivity.this,
                                         MainActivity.class);
 
-                                String update_sql = "UPDATE goal SET goal_name = '" + edit_goal.getText().toString() + "'," +
-                                        " memo = '" + edit_memo.getText().toString() + "', progress = " + seekInt + "," +
-                                        " year = " + Year_Picker.getValue() + ", month = " + Month_Picker.getValue() + "," +
-                                        " day = " + Day_Picker.getValue() + ", hour = " + Hour_Picker.getValue() + "," +
-                                        " minutes = " + Minutes_Picker.getValue() + ", category = " + goal_category + "" +
-                                        " WHERE goal_id = " + goal_id + ";";
+                Calendar get_cal = Calendar.getInstance();
+                get_cal.set(get_cal.get(Calendar.YEAR),get_cal.get(Calendar.MONTH)+1,get_cal.get(Calendar.DATE), get_cal.get(Calendar.HOUR),get_cal.get(Calendar.MINUTE));
 
-                                db.execSQL(update_sql);
-                                //進捗率が100％のときに完了画面へ遷移する。
-                                if(seekInt!=100) {
-                                    dbIntent_update.putExtra("seekInt", seekInt);
-                                    setResult(RESULT_OK, dbIntent_update);
-                                    //startActivity(dbIntent_update);
-                                    finish();
+                Calendar set_cal = Calendar.getInstance();
+                set_cal.set(Year_Picker.getValue(),Month_Picker.getValue(), Day_Picker.getValue(), Hour_Picker.getValue(), Minutes_Picker.getValue());
+
+                boolean b = set_cal.before(get_cal);
+
+                Log.d("get_cal", "get_cal : " + get_cal);
+                Log.d("set_cal", "set_cal : " + set_cal);
+                Log.d("b", "b : " + b);
+
+                //目標名入力チェック
+                if(edit_goal.getText().toString().equals("") || edit_goal.getText().toString().equals(null)){
+                    new android.app.AlertDialog.Builder(UpdateActivity.this)
+                            .setTitle("入力エラー")
+                            .setMessage("目標名が未入力です。")
+                            .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
                                 }
-                                else{
-                                    Intent success = new Intent(UpdateActivity.this,SuccessActivity.class);
-                                    success.putExtra("goal_name",edit_goal.getText().toString());
-                                    success.putExtra("goal_id",goal_id);
-                                    startActivity(success);
+                            })
+                            .show();
+                }
+                else if(edit_goal.getText().toString().length() > 50){
+                    new android.app.AlertDialog.Builder(UpdateActivity.this)
+                            .setTitle("入力エラー")
+                            .setMessage("目標名は50文字以内です")
+                            .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
                                 }
+                            })
+                            .show();
+                }
+                else if(edit_memo.getText().toString().length() > 255) {
+                    new android.app.AlertDialog.Builder(UpdateActivity.this)
+                            .setTitle("入力エラー")
+                            .setMessage("メモは255文字以内です")
+                            .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+                                }
+                            })
+                            .show();
+                }
+                else if(b){
+                    new android.app.AlertDialog.Builder(UpdateActivity.this)
+                            .setTitle("入力エラー")
+                            .setMessage("現在の日時より過去に設定することはできません。")
+                            .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+                                }
+                            })
+                            .show();
+                }
+                else{
+                    new android.app.AlertDialog.Builder(UpdateActivity.this)
+                            .setTitle("目標修正確認")
+                            .setMessage("目標を上書きします。よろしいですか？")
+                            .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialogInterface, int i) {
+                                        String update_sql = "UPDATE goal SET goal_name = '" + edit_goal.getText().toString() + "'," +
+                                                " memo = '" + edit_memo.getText().toString() + "', progress = " + seekInt + "," +
+                                                " year = " + Year_Picker.getValue() + ", month = " + Month_Picker.getValue() + "," +
+                                                " day = " + Day_Picker.getValue() + ", hour = " + Hour_Picker.getValue() + "," +
+                                                " minutes = " + Minutes_Picker.getValue() + ", category = " + goal_category + "" +
+                                                " WHERE goal_id = " + goal_id + ";";
+
+                                        db.execSQL(update_sql);
+                                        //進捗率が100％のときに完了画面へ遷移する。
+                                        if(seekInt!=100) {
+                                            dbIntent_update.putExtra("seekInt", seekInt);
+                                            setResult(RESULT_OK, dbIntent_update);
+                                            //startActivity(dbIntent_update);
+                                            finish();
+                                        }
+                                        else{
+                                            Intent success = new Intent(UpdateActivity.this,SuccessActivity.class);
+                                            success.putExtra("goal_name",edit_goal.getText().toString());
+                                            success.putExtra("goal_id",goal_id);
+                                            startActivity(success);
+                                        }
+                                    }
+                                })
+                                .setNegativeButton("Cancel", null)
+                            .show();
+                }
              }
           });
      }
