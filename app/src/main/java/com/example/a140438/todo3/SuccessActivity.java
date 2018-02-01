@@ -36,7 +36,7 @@ public class SuccessActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_success);
 
-        success_image = (ImageView)findViewById(R.id.success_image);
+        success_image = (ImageView)findViewById(R.id.success_image2);
         try(FileInputStream fileInputStream = openFileInput(fileName);){
             if(fileInputStream != null){
                 Bitmap bitmap = BitmapFactory.decodeStream(fileInputStream);
@@ -96,7 +96,7 @@ public class SuccessActivity extends AppCompatActivity {
 
         //メッセージ表示
         succ_mess.setText(result);
-        succ_name.setText("「" + goal_name+"」を達成しました！おめでとうございます！");
+        succ_name.setText("「" + goal_name+"」を達成しました！");
 
         /*テスト用*/
         // 現在日時の取得
@@ -145,10 +145,10 @@ public class SuccessActivity extends AppCompatActivity {
                 * */
             }
         });
-
-        ImageView imageView = (ImageView) findViewById(R.id.check);
-        GlideDrawableImageViewTarget target = new GlideDrawableImageViewTarget(imageView);
-        Glide.with(this).load(R.raw.check).into(target);
+//GIF
+//        ImageView imageView = (ImageView) findViewById(R.id.check);
+//        GlideDrawableImageViewTarget target = new GlideDrawableImageViewTarget(imageView);
+//        Glide.with(this).load(R.raw.check).into(target);
 
     }
 };
