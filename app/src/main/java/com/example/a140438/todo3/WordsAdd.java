@@ -154,7 +154,7 @@ public class WordsAdd extends Activity {
                 Log.d("SQL", "SQL28 : " + NORM_B_add);
                 Log.d("SQL", "SQL29 : " + NORM_C_add);
 
-                /*
+                
                 db.execSQL(package_add);
                 db.execSQL(CHAR_A_add);
                 db.execSQL(CHAR_B_add);
@@ -186,7 +186,7 @@ public class WordsAdd extends Activity {
                 db.execSQL(NORM_C_add);
 
                 startActivity(dbIntent);
-                */
+
             }
         });
     }
