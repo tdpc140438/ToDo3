@@ -18,6 +18,8 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.isseiaoki.simplecropview.CropImageView;
+
 import java.io.BufferedInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -53,11 +55,16 @@ public class ImageActivity extends AppCompatActivity {
                 Drawable draw = new BitmapDrawable(getResources(),bitmap);
                 selectImage.setImageDrawable(draw);
                // selectImage.setImageBitmap(bitmap);
+
+
             }
         }
         catch(Exception e){
             e.printStackTrace();
         }
+
+
+
 
         imageButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -86,6 +93,21 @@ public class ImageActivity extends AppCompatActivity {
                 startActivity(dbIntent);
             }
         });
+
+
+        //1/29追加
+//        final CropImageView cropImageView = (CropImageView)findViewById(R.id.cropImageView);
+//        cropImageView.setImageBitmap(bitmap);
+//        Button cropButton = (Button)findViewById(R.id.crop);
+//        cropButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                // フレームに合わせてトリミング
+//                selectImage.setImageBitmap(cropImageView.getCroppedBitmap());
+//
+//            }
+//        });
+
     }
 
     @Override
@@ -109,7 +131,7 @@ public class ImageActivity extends AppCompatActivity {
 
                         //Bitmapをbyteに変換
                         ByteArrayOutputStream bos = new ByteArrayOutputStream();
-                        bmp.compress(Bitmap.CompressFormat.JPEG, 100, bos);
+                        bmp.compress(Bitmap.CompressFormat.PNG, 100, bos);
 
                         //内部ストレージにバイナリで保存
                         try(FileOutputStream fileOutputStream = openFileOutput(fileName,

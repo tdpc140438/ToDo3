@@ -8,6 +8,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.FloatingActionButton;
@@ -71,21 +72,6 @@ public class MainActivity extends AppCompatActivity
         try(FileInputStream fileInputStream = openFileInput(fileName);){
             if(fileInputStream != null){
                 Bitmap bitmap = BitmapFactory.decodeStream(fileInputStream);
-
-
-//                int width = bitmap.getWidth();
-//                int height = bitmap.getHeight();
-//                int[] pixels = new int[width * height];
-//                int c = bitmap.getPixel(0,0);
-//                Bitmap bitmap_png = Bitmap.createBitmap(width,height,Bitmap.Config.ARGB_8888);
-//                bitmap.getPixels(pixels,0,width,0,0,width,height);
-//                for(int y = 0; y< height;y++){
-//                    for(int x = 0; x< height;x++){
-//                        if(pixels[x + y * width] == c){pixels[x + y * width]=0;}
-//                    }
-//                }
-//                bitmap_png.eraseColor(Color.argb(0,0,0,0));
-//                bitmap_png.setPixels(pixels,0,width,0,0,width,height);
                 main_image.setImageBitmap(bitmap);
             }
         }
@@ -183,6 +169,8 @@ public class MainActivity extends AppCompatActivity
              button[i] = new Button(this);
              g_View[i] = new TextView(this);
              linearLayout[i] = new LinearLayout(MainActivity.this);
+             constraintLayout[i] = new ConstraintLayout(MainActivity.this);
+
 
              //ボタンid
              int Buttonid = View.generateViewId();
@@ -204,6 +192,9 @@ public class MainActivity extends AppCompatActivity
                      new LinearLayout.LayoutParams(
                              LinearLayout.LayoutParams.MATCH_PARENT,    //文字列の幅に合わせる
                              LinearLayout.LayoutParams.MATCH_PARENT);  //文字列の高さに合わせる
+             //
+             //
+             // constraintLayout[i].setConstraintSet();
 
 
              //ボタンのレイアウト設定
