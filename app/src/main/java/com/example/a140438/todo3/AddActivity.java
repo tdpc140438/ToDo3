@@ -1,6 +1,8 @@
 package com.example.a140438.todo3;
 
+import android.app.AlertDialog;
 import android.content.ContentValues;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -142,19 +144,85 @@ public class AddActivity extends AppCompatActivity {
         add_button.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent dbIntent = new Intent(AddActivity.this,
+                final Intent dbIntent = new Intent(AddActivity.this,
                         MainActivity.class);
 
-                String sql = "INSERT INTO goal(goal_name, memo, progress, " +
-                             "year, month, day, hour, minutes, category)" +
-                             " VALUES('" + goal_text.getText().toString() + "', '" + memo_text.getText().toString() +
-                             "', " + seekInt + ", "  + yearPicker.getValue() + ", "+ monthPicker.getValue() +
-                             ", " + dayPicker.getValue() + ", " + hourPicker.getValue() +
-                             ", " + minutesPicker.getValue() + ", " + category + ")";
+                Calendar get_cal = Calendar.getInstance();
+                get_cal.set(get_cal.get(Calendar.YEAR),get_cal.get(Calendar.MONTH)+1,get_cal.get(Calendar.DATE), get_cal.get(Calendar.HOUR),get_cal.get(Calendar.MINUTE));
 
-                db.execSQL(sql);
+                Calendar set_cal = Calendar.getInstance();
+                set_cal.set(yearPicker.getValue(),monthPicker.getValue(), dayPicker.getValue(), hourPicker.getValue(), minutesPicker.getValue());
 
-                startActivity(dbIntent);
+                boolean b = set_cal.before(get_cal);
+
+                //目標名入力チェック
+                if(goal_text.getText().toString().equals("") || goal_text.getText().toString().equals(null)){
+                    new AlertDialog.Builder(AddActivity.this)
+                            .setTitle("入力エラー")
+                            .setMessage("目標名が未入力です。")
+                            .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+                                }
+                            })
+                            .show();
+                }
+                else if(goal_text.getText().toString().length() > 50){
+                    new AlertDialog.Builder(AddActivity.this)
+                            .setTitle("入力エラー")
+                            .setMessage("目標名は5文字以内です")
+                            .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+                                }
+                            })
+                            .show();
+                }
+                else if(memo_text.getText().toString().length() > 255){
+                    new AlertDialog.Builder(AddActivity.this)
+                            .setTitle("入力エラー")
+                            .setMessage("メモは5文字以内です")
+                            .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+                                }
+                            })
+                            .show();
+                }
+                else if(b){
+                    new AlertDialog.Builder(AddActivity.this)
+                            .setTitle("入力エラー")
+                            .setMessage("現在の日時より過去に設定することはできません。")
+                            .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+                                }
+                            })
+                            .show();
+                }
+                else{
+                    new AlertDialog.Builder(AddActivity.this)
+                            .setTitle("目標登録確認")
+                            .setMessage("目標を登録します。よろしいですか？")
+                            .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+                                    String sql = "INSERT INTO goal(goal_name, memo, progress, " +
+                                            "year, month, day, hour, minutes, category)" +
+                                            " VALUES('" + goal_text.getText().toString() + "', '" + memo_text.getText().toString() +
+                                            "', " + seekInt + ", "  + yearPicker.getValue() + ", "+ monthPicker.getValue() +
+                                            ", " + dayPicker.getValue() + ", " + hourPicker.getValue() +
+                                            ", " + minutesPicker.getValue() + ", " + category + ")";
+
+                                    db.execSQL(sql);
+
+                                    startActivity(dbIntent);
+                                }
+                            })
+                            .setNegativeButton("Cancel", null)
+                            .show();
+                }
+
             }
         });
 
