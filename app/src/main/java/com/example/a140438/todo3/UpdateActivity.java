@@ -229,7 +229,7 @@ public class UpdateActivity extends AppCompatActivity {
                 else if(edit_goal.getText().toString().length() > 50){
                     new android.app.AlertDialog.Builder(UpdateActivity.this)
                             .setTitle("入力エラー")
-                            .setMessage("目標名は5文字以内です")
+                            .setMessage("目標名は50文字以内です")
                             .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialogInterface, int i) {
@@ -240,7 +240,7 @@ public class UpdateActivity extends AppCompatActivity {
                 else if(edit_memo.getText().toString().length() > 255) {
                     new android.app.AlertDialog.Builder(UpdateActivity.this)
                             .setTitle("入力エラー")
-                            .setMessage("メモは5文字以内です")
+                            .setMessage("メモは255文字以内です")
                             .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialogInterface, int i) {
