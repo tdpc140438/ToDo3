@@ -116,8 +116,9 @@ public class MainActivity extends AppCompatActivity
 
             public void onClick(DialogInterface dialog, int which) {
                 //初回表示完了
-
+                int def=0;
                 Intent intent = new Intent(MainActivity.this,UserActivity.class);
+                intent.putExtra("def",def);
                 startActivity(intent);
 
 
@@ -127,6 +128,8 @@ public class MainActivity extends AppCompatActivity
         // ダイアログの作成と表示
         if(PREFERENCE_INIT == getState()){
             //初回起動時のみ表示する
+
+
             alertDialog.create();
             alertDialog.show();
         }
@@ -465,7 +468,7 @@ public class MainActivity extends AppCompatActivity
                 }
             });
 
-            setState(1);
+
         }
 
 
@@ -605,7 +608,7 @@ public class MainActivity extends AppCompatActivity
 
         }
 
-
+        setState(1);
             }
 
 

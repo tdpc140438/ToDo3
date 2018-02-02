@@ -30,8 +30,9 @@ public class UserActivity extends AppCompatActivity {
     //データ保存
     private void setState(int state) {
         // SharedPreferences設定を保存
-        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
-        sp.edit().putInt("InitState", state).commit();
+        SharedPreferences sp_u = PreferenceManager.getDefaultSharedPreferences(this);
+
+        sp_u.edit().putInt("InitState_u", state).commit();
 
         //ログ表示
         output( String.valueOf(state) );
@@ -41,8 +42,8 @@ public class UserActivity extends AppCompatActivity {
     private int getState() {
         // 読み込み
         int state;
-        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
-        state = sp.getInt("InitState", PREFERENCE_INIT);
+        SharedPreferences sp_u = PreferenceManager.getDefaultSharedPreferences(this);
+        state = sp_u.getInt("InitState_u", PREFERENCE_INIT);
 
         //ログ表示
         output( String.valueOf(state) );
@@ -129,10 +130,9 @@ public class UserActivity extends AppCompatActivity {
             public void onClick(View view) {
                 AlertDialog.Builder alertDialog=new AlertDialog.Builder(UserActivity.this);
                 // ダイアログの設定
-                if(PREFERENCE_INIT == getState()){
-                    //初回起動時のみ表示する
-                    alertDialog.create();
-                    alertDialog.show();
+
+                Intent intent = getIntent();
+                int def = intent.getIntExtra("def", 0);
 
                 alertDialog.setTitle(" よろしくお願いします！");    //タイトル
                 alertDialog.setMessage("続けて初期画像の設定を行います。")      //内容
@@ -150,8 +150,15 @@ public class UserActivity extends AppCompatActivity {
                     }});
 
                 // ダイアログの作成と表示
+                if(PREFERENCE_INIT == getState()){
+                    //初回起動時のみ表示する
+                    Log.d("getstate_u", "変数 getState は「" + def + "」");
 
-                }else {
+                    alertDialog.create();
+                    alertDialog.show();
+
+                }
+                else {
 
 
                     Intent dbIntent = new Intent(UserActivity.this, MainActivity.class);
@@ -177,5 +184,6 @@ public class UserActivity extends AppCompatActivity {
             }
         });
         setState(1);
+
     }
 }
