@@ -153,26 +153,59 @@ public class UserActivity extends AppCompatActivity {
 
                 }else {
 
+                    if(user_name_edit.getText().toString().equals("") || user_name_edit.getText().toString().equals(null)){
+                        new android.app.AlertDialog.Builder(UserActivity.this)
+                                .setTitle("入力エラー")
+                                .setMessage("ユーザー名が未入力です。")
+                                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialogInterface, int i) {
+                                    }
+                                })
+                                .show();
+                    }
+                    else if(user_name_edit.getText().toString().length() > 10){
+                        new android.app.AlertDialog.Builder(UserActivity.this)
+                                .setTitle("入力エラー")
+                                .setMessage("ユーザー名は10文字以内です")
+                                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialogInterface, int i) {
+                                    }
+                                })
+                                .show();
+                    }
+                    else{
+                        new android.app.AlertDialog.Builder(UserActivity.this)
+                                .setTitle("ユーザー情報登録確認")
+                                .setMessage("ユーザー情報を登録します。よろしいですか？")
+                                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialogInterface, int i) {
+                                        Intent dbIntent = new Intent(UserActivity.this, MainActivity.class);
 
-                    Intent dbIntent = new Intent(UserActivity.this, MainActivity.class);
+                                        //userテーブルをアップデート
+                                        String update_sql = "UPDATE user SET user_name = '" + user_name_edit.getText().toString() + "', " +
+                                                " use_package = '" + use_package + "' WHERE user_id = 1;";
 
-                    //userテーブルをアップデート
-                    String update_sql = "UPDATE user SET user_name = '" + user_name_edit.getText().toString() + "', " +
-                            " use_package = '" + use_package + "' WHERE user_id = 1;";
-
-                    db.execSQL(update_sql);
+                                        db.execSQL(update_sql);
 
 
-                    //MainActivityへ受け渡すパック情報(package_id)を検索
-                    Cursor c3 = null;
-                    String id_sql = "SELECT * FROM package WHERE package_name = '" + use_package + "';";
-                    c3 = db.rawQuery(id_sql, new String[]{});
-                    c3.moveToFirst();
+                                        //MainActivityへ受け渡すパック情報(package_id)を検索
+                                        Cursor c3 = null;
+                                        String id_sql = "SELECT * FROM package WHERE package_name = '" + use_package + "';";
+                                        c3 = db.rawQuery(id_sql, new String[]{});
+                                        c3.moveToFirst();
 
-                    //idで受け渡し
-                    dbIntent.putExtra("user_name", user_name_edit.getText().toString());
-                    dbIntent.putExtra("use_package_id", c3.getString(0));
-                    startActivity(dbIntent);
+                                        //idで受け渡し
+                                        dbIntent.putExtra("user_name", user_name_edit.getText().toString());
+                                        dbIntent.putExtra("use_package_id", c3.getString(0));
+                                        startActivity(dbIntent);
+                                    }
+                                })
+                                .setNegativeButton("Cancel", null)
+                                .show();
+                    }
                 }
             }
         });
