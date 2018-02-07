@@ -1,6 +1,14 @@
 apply plugin: 'com.android.application'
 
 android {
+    signingConfigs {
+        config {
+            keyAlias 'testkey'
+            keyPassword 'password'
+            storePassword 'password'
+            storeFile file('C:/Users/140438/AndroidStudioProjects/ToDo3/sigien.jks')
+        }
+    }
     compileSdkVersion 26
     defaultConfig {
         applicationId "com.example.a140438.todo"
@@ -14,11 +22,9 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.config
         }
         noSign {
-            debuggable false
-            renderscriptDebuggable false
-            minifyEnabled false
             zipAlignEnabled true
         }
     }
@@ -40,3 +46,4 @@ dependencies {
     compile 'com.github.bumptech.glide:glide:3.6.1'
     compile 'com.isseiaoki:simplecropview:1.0.10'
 }
+//apply plugin: 'com.google.gms.google-services'

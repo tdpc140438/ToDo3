@@ -1,6 +1,7 @@
 package com.example.a140438.todo3;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -18,6 +19,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.AppLaunchChecker;
 import android.support.v7.app.AlertDialog;
+import android.util.Base64;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
@@ -134,11 +136,23 @@ public class MainActivity extends AppCompatActivity
             alertDialog.show();
         }
 
-
-        main_image = (ImageView) findViewById(R.id.main_image);
+//画像トリミング
+            main_image = (ImageView) findViewById(R.id.main_image);
             try (FileInputStream fileInputStream = openFileInput(fileName);) {
+                ImageActivity im = new ImageActivity();
                 if (fileInputStream != null) {
                     Bitmap bitmap = BitmapFactory.decodeStream(fileInputStream);
+                    main_image.setImageBitmap(bitmap);
+                    //SharedPreferences data =
+                    this.getSharedPreferences("hogehoge",Context.MODE_PRIVATE);
+                    SharedPreferences pref = getSharedPreferences("hogehoge",Context.MODE_PRIVATE);
+                    String s = pref.getString("key", "");
+                    if (!s.equals("")) {
+                        BitmapFactory.Options options = new BitmapFactory.Options();
+                        byte[] b = Base64.decode(s, Base64.DEFAULT);
+                        bitmap = BitmapFactory.decodeByteArray(b, 0, b.length).copy(Bitmap.Config.ARGB_8888, true);
+                        //main_image.setImageBitmap(bitmap_a);
+                    }
                     main_image.setImageBitmap(bitmap);
                 }
             } catch (Exception e) {

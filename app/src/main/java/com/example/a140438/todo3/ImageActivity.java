@@ -3,6 +3,7 @@ package com.example.a140438.todo3;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
@@ -11,8 +12,11 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.ParcelFileDescriptor;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Base64;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -37,6 +41,7 @@ public class ImageActivity extends AppCompatActivity {
     private Button imageButton;
     private Button imageSetEnd;
     private String fileName = "picture_now";
+    public Bitmap crop_bitmap;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,20 +53,50 @@ public class ImageActivity extends AppCompatActivity {
         imageButton = (Button)findViewById(R.id.imageButton);
         imageSetEnd = (Button)findViewById(R.id.imageSetEnd);
 
+
+
         //既に画像を設定してあるなら、その画像を表示
         try(FileInputStream fileInputStream = openFileInput(fileName);){
             if(fileInputStream != null){
-                Bitmap bitmap = BitmapFactory.decodeStream(fileInputStream);
-                Drawable draw = new BitmapDrawable(getResources(),bitmap);
+                crop_bitmap = BitmapFactory.decodeStream(fileInputStream);
+                Drawable draw = new BitmapDrawable(getResources(),crop_bitmap);
                 selectImage.setImageDrawable(draw);
                // selectImage.setImageBitmap(bitmap);
 
+                //1/29追加
+                final CropImageView cropImageView = (CropImageView)findViewById(R.id.cropImageView);
+                cropImageView.setImageBitmap(crop_bitmap);
+                Button cropButton = (Button)findViewById(R.id.crop);
+                cropButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        // フレームに合わせてトリミング
+                        //selectImage.setImageBitmap(cropImageView.getCroppedBitmap());
+
+                        crop_bitmap = (cropImageView.getCroppedBitmap());
+                        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                        crop_bitmap.compress(Bitmap.CompressFormat.PNG,100,baos);
+                        String bitmapStr = Base64.encodeToString(baos.toByteArray(),Base64.DEFAULT);
+
+                        SharedPreferences data = getSharedPreferences("hogehoge", Context.MODE_PRIVATE);
+                        SharedPreferences.Editor editor = data.edit();
+                        editor.putString("key", bitmapStr);
+                        editor.apply();
+
+                        Intent image_intent = new Intent(getApplication(),MainActivity.class);
+                        image_intent.putExtra("img",crop_bitmap);
+                        selectImage.setImageBitmap(crop_bitmap);
+
+                    }
+                });
 
             }
         }
         catch(Exception e){
             e.printStackTrace();
         }
+
+
 
 
 
@@ -95,18 +130,6 @@ public class ImageActivity extends AppCompatActivity {
         });
 
 
-        //1/29追加
-//        final CropImageView cropImageView = (CropImageView)findViewById(R.id.cropImageView);
-//        cropImageView.setImageBitmap(bitmap);
-//        Button cropButton = (Button)findViewById(R.id.crop);
-//        cropButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                // フレームに合わせてトリミング
-//                selectImage.setImageBitmap(cropImageView.getCroppedBitmap());
-//
-//            }
-//        });
 
     }
 
@@ -145,7 +168,9 @@ public class ImageActivity extends AppCompatActivity {
                         //取得した画像を表示
                         try(FileInputStream fileInputStream = openFileInput(fileName);){
                             Bitmap bitmap = BitmapFactory.decodeStream(fileInputStream);
+                            CropImageView cropImageView = (CropImageView)findViewById(R.id.cropImageView);
                             selectImage.setImageBitmap(bitmap);
+                            cropImageView.setImageBitmap(bitmap);
                         }
 
 
